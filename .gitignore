@@ -7,8 +7,30 @@
 # BlueJ files
 *.ctxt
 
+#Telegram Local Token
+*.txt
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
 
 # Package Files #
 *.jar

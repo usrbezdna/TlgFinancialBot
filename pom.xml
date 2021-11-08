@@ -20,7 +20,7 @@
              <configuration>
                 <archive>
                     <manifest>
-                        <mainClass>org.example.Main</mainClass>
+                        <mainClass>org.example.src.main.Main</mainClass>
                     </manifest>
                 </archive>
                 <descriptorRefs>

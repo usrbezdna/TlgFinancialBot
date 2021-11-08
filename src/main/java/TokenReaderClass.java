@@ -1,3 +1,5 @@
+package com.gamedev;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;

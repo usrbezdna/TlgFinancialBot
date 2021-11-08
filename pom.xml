@@ -19,13 +19,13 @@
                   <artifactId>maven-assembly-plugin</artifactId>
                   <configuration>
                   <archive>
-                      <manifest>
+                       <manifest>
                         <mainClass>fully.qualified.MainClass</mainClass>
-                      </manifest>
+                       </manifest>
                   </archive>
-                      <descriptorRefs>
+                       <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
-                      </descriptorRefs>
+                       </descriptorRefs>
                   </configuration>
              </plugin>
            </plugins>

@@ -1,2 +1,3 @@
 # tlgFinancialBot
-Telegram Bot for OOP course at Ural Federal 
+**Telegram Bot for OOP course at Ural Federal**   
+                                      Soon TM

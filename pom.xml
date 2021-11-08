@@ -12,7 +12,6 @@
          <maven.compiler.source>1.8</maven.compiler.source>
          <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    
          <build>
            <plugins>
               <plugin>
@@ -30,7 +29,6 @@
              </plugin>
            </plugins>
          </build>
-
     <dependencies>
         <dependency>
             <groupId>org.telegram</groupId>

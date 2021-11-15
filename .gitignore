@@ -7,9 +7,6 @@
 # BlueJ files
 *.ctxt
 
-#Telegram Local Token
-*.txt
-
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

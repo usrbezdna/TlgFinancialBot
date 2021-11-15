@@ -8,16 +8,14 @@ import java.io.InputStream;
 public class TokenReaderClass {
 
     public String ReadToken() {
-
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream("token.txt");
-        String tokenAsStr;
-
+        String tokenAsStr = null;
         try {
-             tokenAsStr = IOUtils.toString(is, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-             tokenAsStr = "Error";
+            tokenAsStr = System.getenv("TOKEN");
+            System.out.println(tokenAsStr);
+        }
+        catch (SecurityException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         return tokenAsStr;
     }

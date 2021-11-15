@@ -1,27 +1,30 @@
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.groupadministration.SetChatPhoto;
-import org.telegram.telegrambots.meta.api.methods.send.*;
-import org.telegram.telegrambots.meta.api.objects.File;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.bots.AbsSender;
-import org.telegram.telegrambots.meta.updateshandlers.SentCallback;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.HashMap;
 
 public class CommandParserClass {
-    public static String parseCommand(Update update){
-        var chat_id = update.getMessage().getChatId();
-        var message_text = update.getMessage().getText();
-        switch (message_text){
-            case "/help": return "asd";
+
+    private static final HashMap<String, Commands> CommandList = new HashMap<String, Commands>();
+
+    public static void parseCommand(Update update){
+        String msg = update.getMessage().getText();
+        if (CommandList.containsKey(msg)){
+            CommandExecutorClass.setUpdate(update);
+            try {
+                CommandList.get(msg).doCommand();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return "qwe";
     }
 
+    public static void initialize(){
+        CommandList.put("/start", CommandExecutorClass::start);
+        CommandList.put("/help", CommandExecutorClass::help);
+        CommandList.put("/pie", CommandExecutorClass::pie);
+    }
 
+    public interface Commands {
+        void doCommand();
+    }
 }

@@ -16,16 +16,16 @@ import org.jfree.data.general.PieDataset;
 public class DiagramClass {
     private static PieDataset createDataset(){
         DefaultPieDataset test = new DefaultPieDataset();
-        test.setValue( "Fucking maven" , 20.056 );
-        test.setValue( "Shitty syntax" , 36.6798 );
-        test.setValue( "Motherfucking ton of structure" , 40.097854 );
-        test.setValue( "Fuck you" , 10.4534555 );
+        test.setValue( "Sector 1" , 20.056 );
+        test.setValue( "Sector 2" , 36.6798 );
+        test.setValue( "Sector 3" , 40.097854 );
+        test.setValue( "Sector 4" , 10.4534555 );
         return test;
     }
 
     private static JFreeChart createChart( PieDataset dataset ) {
         return ChartFactory.createPieChart(
-                "Reasons why I hate Java",   // chart title
+                "Test Diagram",   // chart title
                 dataset,          // data
                 true,             // include legend
                 false,
@@ -36,7 +36,7 @@ public class DiagramClass {
     static void CreateDiagram() {
         int width = 800;
         int height = 600;
-        File buffer = new File("FJ.jpeg");
+        File buffer = new File("TD.jpeg");
         try {
             ChartUtilities.saveChartAsJPEG(buffer, createChart(createDataset()), width, height);
         } catch (Exception e) {

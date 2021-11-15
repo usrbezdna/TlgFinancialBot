@@ -11,7 +11,6 @@ public class TokenReaderClass {
         String tokenAsStr = null;
         try {
             tokenAsStr = System.getenv("TOKEN");
-            System.out.println(tokenAsStr);
         }
         catch (SecurityException e) {
             e.printStackTrace();

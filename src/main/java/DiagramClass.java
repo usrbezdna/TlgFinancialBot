@@ -1,8 +1,5 @@
 import org.jfree.chart.ChartFactory;
 import java.io.*;
-import java.nio.file.Files;
-import java.util.Arrays;
-
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;

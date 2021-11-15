@@ -1,3 +1,5 @@
+package com.gamedev;
+
 import org.jfree.chart.ChartFactory;
 import java.io.*;
 import org.jfree.chart.ChartUtilities;

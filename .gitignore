@@ -32,10 +32,12 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
+
 #Vscode
 .settings
 .classpath
 .project
+.vscode
 
 # Package Files #
 *.jar

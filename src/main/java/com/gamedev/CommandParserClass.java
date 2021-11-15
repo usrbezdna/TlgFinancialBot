@@ -1,5 +1,6 @@
-import org.telegram.telegrambots.meta.api.objects.Update;
+package com.gamedev;
 
+import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.HashMap;
 
 public class CommandParserClass {

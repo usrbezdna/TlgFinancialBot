@@ -11,7 +11,7 @@ public class TokenReaderClass {
         String tokenAsStr = null;
         try {
             tokenAsStr = System.getenv("TOKEN");
-            System.out.println("I WAS UPDATED")
+            System.out.println("I WAS UPDATED");
         }
         catch (SecurityException e) {
             e.printStackTrace();

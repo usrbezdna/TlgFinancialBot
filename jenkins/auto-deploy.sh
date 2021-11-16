@@ -4,10 +4,10 @@ jar_name=$(ls $building_dir | grep jar-with-dependencies.jar)
 
 if [ -z $(ls /etc/systemd/system | grep bot-daemon.service) ] 
 then 
-	echo "[Unit]
-	Description=Telegram Bot
+    echo "[Unit]
+    Description=Telegram Bot
     Documentation=https://github.com/tooBusyNow/tlgFinancialBot
-	After=network.target
+    After=network.target
     
     [Service]
     User=root
@@ -19,11 +19,9 @@ then
     ExecStartPre=/bin/bash -c "echo Setting up a BotService... "
     ExecStart=java -jar $jar_name
     ExecStartPost=/bin/bash -c "echo BotService was set "
-    
-    
+     
     [Install]
-	WantedBy=multi-user.target" > $HOME/bot-daemon.service
-  
+    WantedBy=multi-user.target" > $HOME/bot-daemon.service
     echo bezdna | sudo -S mv $HOME/bot-daemon.service /etc/systemd/system
 fi
 

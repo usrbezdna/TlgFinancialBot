@@ -10,7 +10,7 @@ public final class TokenReaderClass {
     public String ReadToken() {
         String tokenAsStr = null;
         try {
-            tokenAsStr = "2071564236:AAF_8jccvRxYHuLhxAKysQuwVfezV-nL96c";
+            tokenAsStr = System.getenv("TOKEN");
         }
         catch (SecurityException e) {
             e.printStackTrace();

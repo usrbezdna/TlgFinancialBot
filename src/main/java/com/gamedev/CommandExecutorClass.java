@@ -11,37 +11,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandExecutorClass {
-    private static final SendMessage message = new SendMessage();
-    private static Update update = new Update();
 
-    static void start(){
-        BotClass bot = Main.getBot();
-        String chat_id = String.valueOf(update.getMessage().getChatId());
-        ReplyKeyboardMarkup keyboard = setUpKeyboard();
+    private static final SendMessage message = new SendMessage();
+    private static final SendPhoto sendPhoto = new SendPhoto();
+    private static final ReplyKeyboardMarkup keyboard = setUpKeyboard();
+    private static final BotClass bot = Main.getBot();
+    private static String chat_id = "";
+
+    public static void setChat_id(Update update){
+        chat_id = String.valueOf(update.getMessage().getChatId());
+    }
+
+    public static void start(){
         message.setChatId(chat_id);
         message.setText("Started! Try \"/help\" for commands.");
         message.setReplyMarkup(keyboard);
         bot.sendMessage(message);
     }
 
-    static void help(){
-        BotClass bot = Main.getBot();
-        String chat_id = String.valueOf(update.getMessage().getChatId());
-        SendMessage message = new SendMessage();
+    public static void help(){
         message.setChatId(chat_id);
         message.setText("This is help. We have \"/pie\" - makes a test " +
-                "pie diagram, \"/help\" - helps and \"/start\" - starts and opens " +
-                "inline keyboard. Try them all :)");
+        "pie diagram, \"/help\" - helps and \"/start\" - starts and opens " +
+        "inline keyboard. Try them all :)");
         bot.sendMessage(message);
     }
 
-    static void pie(){
-        BotClass bot = Main.getBot();
-        String chat_id = String.valueOf(update.getMessage().getChatId());
-        SendPhoto sendPhoto = new SendPhoto();
+    public static void pie(){
+        DiagramClass.CreateDiagram();
         sendPhoto.setChatId(chat_id);
         sendPhoto.setCaption("This diagram was made for test. Enjoy!");
-        DiagramClass.CreateDiagram();
         sendPhoto.setPhoto(new InputFile(new File("TD.jpeg")));
         bot.sendPhoto(sendPhoto);
     }
@@ -56,12 +55,4 @@ public class CommandExecutorClass {
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;
     }
-
-    public static void setUpdate(Update update){
-        CommandExecutorClass.update = update;
-    }
-
-    /*public static Update getUpdate(){
-        return CommandExecutorClass.update;
-    }*/
 }

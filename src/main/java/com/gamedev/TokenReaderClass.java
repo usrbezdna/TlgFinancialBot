@@ -5,12 +5,12 @@ import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import java.io.InputStream;
 
-public class TokenReaderClass {
+public final class TokenReaderClass {
 
     public String ReadToken() {
         String tokenAsStr = null;
         try {
-            tokenAsStr = System.getenv("TOKEN");
+            tokenAsStr = "2071564236:AAF_8jccvRxYHuLhxAKysQuwVfezV-nL96c";
         }
         catch (SecurityException e) {
             e.printStackTrace();

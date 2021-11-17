@@ -13,6 +13,17 @@ import org.jfree.data.general.PieDataset;
 //dataset hashMap[key:String(ticker), value:BigDecimal(total)]
 
 public class DiagramClass {
+    public static void CreateDiagram() {
+        int width = 800;
+        int height = 600;
+        File buffer = new File("TD.jpeg");
+        try {
+            ChartUtilities.saveChartAsJPEG(buffer, createChart(createDataset()), width, height);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private static PieDataset createDataset(){
         DefaultPieDataset test = new DefaultPieDataset();
         test.setValue( "Sector 1" , 20.056 );
@@ -29,17 +40,5 @@ public class DiagramClass {
                 true,             // include legend
                 false,
                 false);
-    }
-
-
-    static void CreateDiagram() {
-        int width = 800;
-        int height = 600;
-        File buffer = new File("TD.jpeg");
-        try {
-            ChartUtilities.saveChartAsJPEG(buffer, createChart(createDataset()), width, height);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

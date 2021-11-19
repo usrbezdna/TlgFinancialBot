@@ -1,12 +1,11 @@
 package com.gamedev;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import yahoofinance.*;
 
 public class GetStockPrice {
     public static void getPrice(SendMessage message, BotClass bot,
-        String chat_id, ReplyKeyboardMarkup keyboard, String stockTicker) {
+                                String chat_id, String stockTicker) {
         message.setChatId(chat_id);
         String errPrice = "Can`t find current ticker, try again please";
         try {

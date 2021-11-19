@@ -7,17 +7,14 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 public class Main {
 
     private static final BotClass bot = new BotClass();
-
-    public static BotClass getBot() {
-        return bot;
-    }
+    public static BotClass getBot() { return bot; }
 
     public static void main(String[] args) {
         try {
+            CommandParserClass.initializeCommands();
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
-            CommandParserClass.initializeCommands();
-            System.out.println("BOT WAS UPDATED ANYWAY");
+
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

@@ -5,15 +5,21 @@ import java.util.HashMap;
 
 public class CommandParserClass {
 
-    private static final HashMap<String, Commands> CommandList = new HashMap<>();
+    private static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner> ();
 
     public static void parseCommand(Update update){
-        String text = update.getMessage().getText();
+        CommandExecutorClass.updateChatID(update);
+        String[] input = update.getMessage().getText().split(" ");
+        String data = "";  String command = input[0];
+        try {
+             data = input[1];
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        if (CommandList.containsKey(text)){
-            CommandExecutorClass.setChat_id(update);
+        if (CommandList.containsKey(command)){
             try {
-                CommandList.get(text).doCommand();
+                CommandList.get(command).run(data);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -21,12 +27,13 @@ public class CommandParserClass {
     }
 
     public static void initializeCommands(){
-        CommandList.put("/start", CommandExecutorClass::start);
-        CommandList.put("/help", CommandExecutorClass::help);
-        CommandList.put("/pie", CommandExecutorClass::pie);
+        CommandList.put("/start", arg -> CommandExecutorClass.start());
+        CommandList.put("/help", arg -> CommandExecutorClass.help());
+        CommandList.put("/pie", arg -> CommandExecutorClass.pie());
+        CommandList.put("/price", arg -> CommandExecutorClass.price((String)arg));
     }
 
-    public interface Commands {
-        void doCommand();
+    public interface MethodRunner {
+        void run(Object arg);
     }
 }

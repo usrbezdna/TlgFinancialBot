@@ -8,7 +8,8 @@ public class HelpCommand {
         message.setChatId(chat_id);
         message.setText("This is help. We have \"/pie\" - makes a test " +
                 "pie diagram, \"/help\" - helps and \"/start\" - starts and opens " +
-                "inline keyboard. Try them all :)");
+                "inline keyboard. And also you can get a price of asset, just type:" +
+                " \"/price AAPL\". Try them all :)");
         bot.sendMessage(message);
     }
 }

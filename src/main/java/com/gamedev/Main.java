@@ -17,7 +17,7 @@ public class Main {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
             CommandParserClass.initializeCommands();
-            System.out.println("BOT WAS UPDATED ANYWAY")
+            System.out.println("BOT WAS UPDATED ANYWAY");
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

@@ -4,8 +4,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import yahoofinance.*;
 
 public class GetStockPrice {
-    public static void getPrice(SendMessage message, BotClass bot,
-                                String chat_id, String stockTicker) {
+    public static SendMessage getPrice(SendMessage message, String chat_id, String stockTicker) {
         message.setChatId(chat_id);
         String errPrice = "Can`t find current ticker, try again please";
         try {
@@ -19,6 +18,6 @@ public class GetStockPrice {
             message.setText(errPrice);
             e.printStackTrace();
         }
-        bot.sendMessage(message);
+        return message;
     }
 }

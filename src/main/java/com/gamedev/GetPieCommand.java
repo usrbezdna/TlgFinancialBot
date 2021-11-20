@@ -7,12 +7,11 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import java.io.File;
 
 public class GetPieCommand {
-    public static void pie(SendPhoto sendPhoto, BotClass bot,
-                           String chat_id, ReplyKeyboardMarkup keyboard){
+    public static SendPhoto pie(SendPhoto sendPhoto, String chat_id){
         DiagramClass.CreateDiagram();
         sendPhoto.setChatId(chat_id);
         sendPhoto.setCaption("This diagram was made for test. Enjoy!");
         sendPhoto.setPhoto(new InputFile(new File("TD.jpeg")));
-        bot.sendPhoto(sendPhoto);
+        return sendPhoto;
     }
 }

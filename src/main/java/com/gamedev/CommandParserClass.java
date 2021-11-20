@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class CommandParserClass {
 
-    private static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner> ();
+    public static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner> ();
 
     public static void parseCommand(Update update){
         CommandExecutorClass.updateChatID(update);

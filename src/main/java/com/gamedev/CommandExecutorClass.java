@@ -2,7 +2,7 @@ package com.gamedev;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
 public class CommandExecutorClass {
@@ -18,18 +18,22 @@ public class CommandExecutorClass {
     }
 
     public static void start() {
-        StartCommand.start(message, bot, chat_id, keyboard);
+        SendMessage msg = StartCommand.start(message, chat_id, keyboard);
+        bot.sendMessage(msg);
     }
 
     public static void help(){
-        HelpCommand.help(message, bot, chat_id);
+        SendMessage msg = HelpCommand.help(message, chat_id);
+        bot.sendMessage(msg);
     }
 
     public static void pie(){
-        GetPieCommand.pie(sendPhoto, bot, chat_id, keyboard);
+       SendPhoto photo = GetPieCommand.pie(sendPhoto, chat_id);
+       bot.sendPhoto(photo);
     }
 
     public static void price (String stockTicker)  {
-        GetStockPrice.getPrice(message, bot, chat_id, stockTicker);
+        SendMessage msg = GetStockPrice.getPrice(message, chat_id, stockTicker);
+        bot.sendMessage(msg);
     }
 }

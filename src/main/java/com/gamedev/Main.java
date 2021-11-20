@@ -13,7 +13,6 @@ public class Main {
             CommandParserClass.initializeCommands();
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
-            System.out.println("UPDATEDDD");
 
         } catch (TelegramApiException e) {
             e.printStackTrace();

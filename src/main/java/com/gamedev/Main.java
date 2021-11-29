@@ -10,6 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+            JedisHandler.pingBase();
             CommandParserClass.initializeCommands();
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);

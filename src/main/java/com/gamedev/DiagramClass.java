@@ -13,7 +13,7 @@ import org.jfree.data.general.PieDataset;
 //dataset hashMap[key:String(ticker), value:BigDecimal(total)]
 
 public class DiagramClass {
-    public static void CreateDiagram() {
+    public static void CreateDiagram(){
         int width = 800;
         int height = 600;
         File buffer = new File("TD.jpeg");
@@ -35,7 +35,7 @@ public class DiagramClass {
 
     private static JFreeChart createChart( PieDataset dataset ) {
         return ChartFactory.createPieChart(
-                "Test Diagram",   // chart title
+                "Diagram",   // chart title
                 dataset,          // data
                 true,             // include legend
                 false,

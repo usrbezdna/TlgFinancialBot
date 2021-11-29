@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class BotClass extends TelegramLongPollingBot {
 
-    private static final String TOKEN = new TokenReaderClass().ReadToken();
+    private static final String TOKEN = new EnvVarReaderClass().ReadEnvVar("TOKEN");
     private static final String BOT_NAME = "AwesomeFinancialBot";
 
     @Override

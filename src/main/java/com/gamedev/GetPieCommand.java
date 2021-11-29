@@ -2,8 +2,6 @@ package com.gamedev;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-
 import java.io.File;
 
 public class GetPieCommand {

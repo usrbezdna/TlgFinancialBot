@@ -12,15 +12,14 @@ public class Main {
     private static final BotClass bot = new BotClass();
     public static BotClass getBot() { return bot; }
 
-    public static void main(String[] args) throws JsonMappingException, JsonProcessingException {
+    public static void main(String[] args) {
         try {
-            JedisHandler.init();
             CommandParserClass.initializeCommands();
+            JedisHandler.auth();
+
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
-            System.out.println("UPDATED");
-
-        } catch (TelegramApiException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

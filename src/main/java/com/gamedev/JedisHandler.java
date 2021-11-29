@@ -9,13 +9,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import redis.clients.jedis.Jedis;
 
 public class JedisHandler {
-    private static final String PASSWORD = new EnvVarReaderClass().ReadEnvVar("DB_PASS");
 
-    private static final Jedis db = new Jedis("185.239.208.162", 6379);
+    private static final String IP = "185.239.208.162";
+    private static final Integer PORT = 6379;
+
+    private static final String DB_PASS = new EnvVarReaderClass().ReadEnvVar("DB_PASS");
+    private static final Jedis db = new Jedis(IP, PORT);
     
-    public static void init(){
+    public static void auth(){
         try {
-            db.auth(PASSWORD);
+            db.auth(DB_PASS);
         } catch (Exception e)  {
             e.printStackTrace();
         }

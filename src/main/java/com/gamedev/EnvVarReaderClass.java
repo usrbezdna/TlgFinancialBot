@@ -1,11 +1,11 @@
 package com.gamedev;
 
-public final class EnvVarReaderClass {
+public final class  EnvVarReaderClass {
 
-    public String ReadEnvVar(String type) {
+    public String ReadEnvVar(String name) {
         String tokenAsStr = null;
         try {
-            tokenAsStr = System.getenv(type);
+            tokenAsStr = System.getenv(name);
         }
         catch (SecurityException e) {
             e.printStackTrace();

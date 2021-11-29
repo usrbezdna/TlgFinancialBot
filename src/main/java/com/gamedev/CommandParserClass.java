@@ -5,6 +5,10 @@ import java.util.HashMap;
 
 public class CommandParserClass {
 
+    public interface MethodRunner {
+        void run(Object arg);
+    }
+
     public static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner> ();
 
     public static void parseCommand(Update update){
@@ -31,9 +35,5 @@ public class CommandParserClass {
         CommandList.put("/help", arg -> CommandExecutorClass.help());
         CommandList.put("/pie", arg -> CommandExecutorClass.pie());
         CommandList.put("/price", arg -> CommandExecutorClass.price((String)arg));
-    }
-
-    public interface MethodRunner {
-        void run(Object arg);
     }
 }

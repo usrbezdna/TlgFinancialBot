@@ -1,23 +1,24 @@
-/*package com.gamedev;
+package com.gamedev;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
 public class GetPortfolioClass {
 
-    public Stock getStock(String stockName) throws IOException {
+    public static Stock getStock(String stockName) throws IOException {
         return YahooFinance.get(stockName);
     }
 
-    public HashMap<String, Double> calcPortfolio(HashMap<String, Integer> rawPortfolio) {
+    public static HashMap<String, Double> calcPortfolio(Map<String, String> rawPortfolio) {
         HashMap<String, Double> processedPortfolio = new HashMap<String, Double>();
-        for (Map.Entry<String, Integer> stock : rawPortfolio.entrySet()) {
+        for (Map.Entry<String, String> stock : rawPortfolio.entrySet()) {
             try {
-                processedPortfolio.put(stock.getKey(), stock.getValue() *
+                processedPortfolio.put(stock.getKey(), Integer.parseInt(stock.getValue()) *
                         getStock(stock.getKey()).
                                 getQuote().
                                 getPrice().
@@ -29,11 +30,15 @@ public class GetPortfolioClass {
         return processedPortfolio;
     }
 
-    public Double calcPortfolioBalance(HashMap<String, Double> portfolio) {
+    public static SendMessage calcPortfolioBalance(SendMessage message, String chat_id, Map<String, String> portfolio) {
         Double balance = 0.0;
-        for (Map.Entry<String, Double> stock : portfolio.entrySet()) {
+        message.setChatId(chat_id);
+        HashMap<String, Double> calculated = calcPortfolio(portfolio);
+        for (Map.Entry<String, Double> stock : calculated.entrySet()) {
             balance += stock.getValue();
         }
-        return balance;
+        Double result = Math.floor(balance);
+        message.setText(result.toString());
+        return message;
     }
-}*/
+}

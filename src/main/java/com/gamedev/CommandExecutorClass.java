@@ -1,5 +1,6 @@
 package com.gamedev;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.*;
@@ -35,5 +36,12 @@ public class CommandExecutorClass {
     public static void price (String stockTicker)  {
         SendMessage msg = GetStockPrice.getPrice(message, chat_id, stockTicker);
         bot.sendMessage(msg);
+    }
+
+    public static void balance (){
+        try {
+            SendMessage msg = GetPortfolioClass.calcPortfolioBalance(message, chat_id, JedisHandler.getUserData("234"));
+            bot.sendMessage(msg);
+        } catch (Exception ignored){}
     }
 }

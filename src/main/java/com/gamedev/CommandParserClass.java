@@ -17,8 +17,7 @@ public class CommandParserClass {
         String data = "";  String command = input[0];
         try {
              data = input[1];
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
 
         if (CommandList.containsKey(command)){
@@ -35,5 +34,6 @@ public class CommandParserClass {
         CommandList.put("/help", arg -> CommandExecutorClass.help());
         CommandList.put("/pie", arg -> CommandExecutorClass.pie());
         CommandList.put("/price", arg -> CommandExecutorClass.price((String)arg));
+        CommandList.put("/balance", arg -> CommandExecutorClass.balance());
     }
 }

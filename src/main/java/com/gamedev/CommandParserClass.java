@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class CommandParserClass {
 
     public interface MethodRunner {
-        void run(Object arg);
+        void run(String[] s);
     }
 
     public static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner> ();
@@ -14,15 +14,16 @@ public class CommandParserClass {
     public static void parseCommand(Update update){
         CommandExecutorClass.updateChatID(update);
         String[] input = update.getMessage().getText().split(" ");
-        String data = "";  String command = input[0];
+        String data = "";  String command = input[0]; String argument = "";
         try {
              data = input[1];
-        } catch (Exception ignored) {
-        }
+             argument = input[2];
+        } catch (Exception ignored) {}
 
         if (CommandList.containsKey(command)){
             try {
-                CommandList.get(command).run(data);
+                String[] args = new String[] {data, argument};
+                CommandList.get(command).run(args);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -30,10 +31,12 @@ public class CommandParserClass {
     }
 
     public static void initializeCommands(){
-        CommandList.put("/start", arg -> CommandExecutorClass.start());
-        CommandList.put("/help", arg -> CommandExecutorClass.help());
-        CommandList.put("/pie", arg -> CommandExecutorClass.pie());
-        CommandList.put("/price", arg -> CommandExecutorClass.price((String)arg));
-        CommandList.put("/balance", arg -> CommandExecutorClass.balance());
+        CommandList.put("/start", args -> CommandExecutorClass.start());
+        CommandList.put("/help", args -> CommandExecutorClass.help());
+        CommandList.put("/pie", args -> CommandExecutorClass.pie());
+        CommandList.put("/balance", args -> CommandExecutorClass.balance());
+
+        CommandList.put("/add", CommandExecutorClass::add);
+        CommandList.put("/price", CommandExecutorClass::price);
     }
 }

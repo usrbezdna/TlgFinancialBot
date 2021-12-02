@@ -1,10 +1,10 @@
 package com.gamedev;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import redis.clients.jedis.Tuple;
 
 public class CommandExecutorClass {
 
@@ -30,18 +30,31 @@ public class CommandExecutorClass {
 
     public static void pie(){
        SendPhoto photo = GetPieCommand.pie(sendPhoto, chat_id);
-       bot.sendPhoto(photo);
+       System.out.println(photo.getPhoto());
+       if (photo.getPhoto() == null) {
+           message.setText("Can't handle");
+           message.setChatId(chat_id);
+           bot.sendMessage(message);
+       } else{
+           bot.sendPhoto(photo);
+       }
     }
 
-    public static void price (String stockTicker)  {
-        SendMessage msg = GetStockPrice.getPrice(message, chat_id, stockTicker);
+    public static void price (String[] stockTicker)  {
+        System.out.println(stockTicker[0]);
+        SendMessage msg = GetStockPrice.getPrice(message, chat_id, stockTicker[0]);
         bot.sendMessage(msg);
     }
 
     public static void balance (){
         try {
-            SendMessage msg = GetPortfolioClass.calcPortfolioBalance(message, chat_id, JedisHandler.getUserData("234"));
+            SendMessage msg = GetPortfolioClass.calcPortfolioBalance(message, chat_id, JedisHandler.getUserData(chat_id));
             bot.sendMessage(msg);
         } catch (Exception ignored){}
+    }
+
+    public static void add(String[] args){
+        SendMessage msg = AddAssetClass.addAsset(args, chat_id);
+        bot.sendMessage(msg);
     }
 }

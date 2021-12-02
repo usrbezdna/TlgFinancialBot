@@ -33,6 +33,11 @@ public class GetPortfolioClass {
     public static SendMessage calcPortfolioBalance(SendMessage message, String chat_id, Map<String, String> portfolio) {
         Double balance = 0.0;
         message.setChatId(chat_id);
+
+        if (portfolio == null) {
+            message.setText(balance.toString());
+            return message;
+        }
         HashMap<String, Double> calculated = calcPortfolio(portfolio);
         for (Map.Entry<String, Double> stock : calculated.entrySet()) {
             balance += stock.getValue();

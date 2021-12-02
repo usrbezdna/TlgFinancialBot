@@ -24,11 +24,20 @@ public class JedisHandler {
         }
     }
 
-    public static Map<String, String> getUserData (String chat_id) throws JsonMappingException, JsonProcessingException {
-        return new ObjectMapper().readValue(db.get(chat_id), new TypeReference<Map<String, String>>(){});
+    public static Map<String, String> getUserData (String chat_id) {
+        try{
+            Map<String, String> userData = new ObjectMapper().readValue(db.get(chat_id), new TypeReference<Map<String, String>>(){});
+            return userData;
+        } catch (Exception ignored){
+            return null;
+        }
     }
 
     public static void setUserData (String chat_id, HashMap<String, String> data) throws JsonProcessingException {
         db.set(chat_id, new ObjectMapper().writeValueAsString(data));
+    }
+
+    public static void flushDataBase() {
+        db.flushDB();
     }
 }

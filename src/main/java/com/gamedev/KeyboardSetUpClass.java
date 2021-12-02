@@ -14,7 +14,7 @@ public class KeyboardSetUpClass {
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow rows = new KeyboardRow();
 
-        List<String> commands = Stream.of("/help", "/pie").collect(Collectors.toList());
+        List<String> commands = Stream.of("/help", "/pie", "/balance").collect(Collectors.toList());
         commands.forEach(rows::add); keyboard.add(rows);
 
         keyboardMarkup.setKeyboard(keyboard);

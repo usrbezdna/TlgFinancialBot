@@ -14,19 +14,20 @@
 
 
 # Description
-### Joint project at Ural Federal University focused on implementation of Telegram Bot with Java Programming Language.
-### Techological stack: Apache Maven (build automation tool), Redis DB (noSQL DataBase) and Jenkins Pipeline (CI/CD tool).
+> Joint project at Ural Federal University focused on implementation of Telegram Bot with Java Programming Language.
+ Techological stack: Apache Maven (build automation tool), Redis DB (noSQL DataBase) and Jenkins Pipeline (CI/CD tool).
 
-  
+# FAQ
+> In progress.... 
+
 # Task-List
 
-### Task 0: CommandParser, CommandExecutor classes + Diagram + Help message
-### Task 0\`: CI/CD Pipeline
+### Task 0: 
+>CommandParser, CommandExecutor classes + Diagram processing + Help message
+### Task 0\': 
+> CI/CD Pipeline using Jenkins Automatization tool. Made as a simple project, not a real pipeline
+### Task 1: 
+> Exchange API implementation, RedisDB integration with project, Diagram creation based on user's portfolio
 
-
-### Task 1: Exchange API implementation
-### Task 2: RedisDB integration with project, Users logic
-
-
-### Task 3: User portfolio handling and Diagram Creation
-### Task 4: Financial advises and logic to help manage User Portfolio
+### Task 2: 
+> Will be added soon (TM)

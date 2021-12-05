@@ -24,8 +24,13 @@ public class BotClass extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        CommandParserClass.parseCommand(update);
+
+        if (update.hasCallbackQuery())
+            CommandParserClass.parseCallback(update);
+        else
+            CommandParserClass.parseCommand(update);
     }
+
 
     void sendMessage(SendMessage message){
         try{

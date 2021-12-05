@@ -21,9 +21,6 @@ public class GetPieCommand {
                                 "TD.jpeg")
                 );
             }
-            else {
-                sendPhoto.setCaption("ERROR");
-            }
 
         } catch (IOException e){
             e.printStackTrace();

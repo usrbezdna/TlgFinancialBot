@@ -3,6 +3,7 @@ package com.gamedev;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -23,10 +24,24 @@ public class BotClass extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        CommandParserClass.parseCommand(update);
+
+        if (update.hasCallbackQuery())
+            CommandParserClass.parseCallback(update);
+        else
+            CommandParserClass.parseCommand(update);
     }
 
+
     void sendMessage(SendMessage message){
+        try{
+            execute(message);
+        }
+        catch (TelegramApiException e){
+            e.printStackTrace();
+        }
+    }
+
+    void updateMessage(EditMessageText message){
         try{
             execute(message);
         }

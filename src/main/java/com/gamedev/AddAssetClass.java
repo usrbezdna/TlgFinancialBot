@@ -18,7 +18,7 @@ public class AddAssetClass {
         }
 
         try{
-            String stockPrice = GetPortfolioClass.getStock(args[0]).toString();
+            String stockPrice = GetPortfolioClass.getStockPriceUSD(args[0]).toString();
             if (stockPrice.contains("null")) {
                 message.setText(errPrice);
             } else {

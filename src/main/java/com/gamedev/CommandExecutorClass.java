@@ -4,13 +4,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-
-import java.util.HashMap;
-import java.util.Objects;
-
-import static java.lang.Math.toIntExact;
 
 public class CommandExecutorClass {
 
@@ -62,37 +56,9 @@ public class CommandExecutorClass {
     }
 
     public static void balance(String[] args){
-        SendMessage msg;
-        if (Objects.equals(args[0], "Callback")) {
-        int message_id = toIntExact(Long.parseLong(args[2]));
-            if (args[1].equals("detailed")) {
-
-                    msg = GetPortfolioClass
-                            .calcPortfolioBalance(message, chat_id, JedisHandler
-                                         .getUserData(chat_id), true);
-
-                    edited_message.setChatId(chat_id);
-                    edited_message.setMessageId(message_id);
-                    edited_message.setText(msg.getText());
-                    bot.sendEverything(edited_message);
-                }
-            }
-
-
-            else {
-                     msg = GetPortfolioClass
-                        .calcPortfolioBalance(message, chat_id, JedisHandler
-                                .getUserData(chat_id), false);
-
-                InlineKeyboardMarkup keyboard = KeyboardSetUpClass.setInlineKeyboard(new HashMap<String, String>() {{
-                    put("Show detailed portfolio", "/balance detailed");
-                    put("Show hello message", "/help");
-                    put("Some text", "fasfa");
-                }});
-
-                msg.setReplyMarkup(keyboard);
-                bot.sendEverything(msg);
-            }
+        ReturningValues balanceStatus = GetBalanceClass.getBalance(args, message, edited_message, chat_id);
+        if (balanceStatus._message_.getText() == null) bot.sendEverything(balanceStatus._edited_message_);
+        else bot.sendEverything(balanceStatus._message_);
         releaseFields();
     }
 }

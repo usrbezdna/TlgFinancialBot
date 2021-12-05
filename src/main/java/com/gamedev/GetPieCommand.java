@@ -9,14 +9,11 @@ import java.util.Map;
 
 public class GetPieCommand {
     public static ReturningValues pie(SendPhoto sendPhoto, String chat_id){
-
         sendPhoto.setChatId(chat_id);
 
         SendMessage message = new SendMessage();
         message.setChatId(chat_id);
         message.setText("Can't handle current diagram!");
-
-
         try {
             Map<String, String> userData = JedisHandler.getUserData(chat_id);
 
@@ -32,9 +29,7 @@ public class GetPieCommand {
 
         } catch (IOException e){
             e.printStackTrace();
-
         }
-
         return new ReturningValues(message, sendPhoto);
     }
 }

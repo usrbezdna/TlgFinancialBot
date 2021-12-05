@@ -6,9 +6,9 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 
 public class ReturningValues {
 
-    public SendMessage _message_;
-    public SendPhoto _photo_;
-    public EditMessageText _edited_message_;
+    public SendMessage _message_  = new SendMessage();
+    public SendPhoto _photo_ = new SendPhoto();
+    public EditMessageText _edited_message_ = new EditMessageText();
 
     public ReturningValues(SendMessage message, SendPhoto photo, EditMessageText edited_message){
         this._message_ = message;
@@ -32,4 +32,6 @@ public class ReturningValues {
     public ReturningValues(EditMessageText editMessageText){
         this._edited_message_ = editMessageText;
     }
+
+    public ReturningValues(){}
 }

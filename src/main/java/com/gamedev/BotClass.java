@@ -32,13 +32,12 @@ public class BotClass extends TelegramLongPollingBot {
 
     public <T> void sendEverything (T toBeSend) {
         try {
-            if (toBeSend instanceof SendPhoto) {
+            if (toBeSend instanceof SendPhoto)
                  execute((SendPhoto) toBeSend);
-            } else if (toBeSend instanceof SendMessage) {
+            else if (toBeSend instanceof SendMessage)
                 execute((SendMessage) toBeSend);
-            } else if (toBeSend instanceof EditMessageText){
+            else if (toBeSend instanceof EditMessageText)
                 execute((EditMessageText) toBeSend);
-            }
         }
         catch (Exception e){
             e.printStackTrace();

@@ -15,8 +15,8 @@ import static java.lang.Math.toIntExact;
 public class CommandExecutorClass {
 
     private static SendMessage message = new SendMessage();
-    private static final SendPhoto sendPhoto = new SendPhoto();
-    private static final EditMessageText edited_message = new EditMessageText();
+    private static SendPhoto sendPhoto = new SendPhoto();
+    private static EditMessageText edited_message = new EditMessageText();
     private static final ReplyKeyboardMarkup keyboard = KeyboardSetUpClass.setReplyKeyboard();
     private static final BotClass bot = Main.getBot();
     private static String chat_id = "";
@@ -25,36 +25,40 @@ public class CommandExecutorClass {
         chat_id = String.valueOf(update.getMessage().getChatId());
     }
 
+    private static void releaseFields(){
+        message = new SendMessage();
+        sendPhoto = new SendPhoto();
+        edited_message = new EditMessageText();
+    }
+
     public static void start(){
         SendMessage msg = StartCommand.start(message, chat_id, keyboard);
         bot.sendEverything(msg);
+        releaseFields();
     }
 
     public static void help(){
         SendMessage msg = HelpCommand.help(message, chat_id);
         bot.sendEverything(msg);
+        releaseFields();
     }
 
     public static void add(String[] args){
         SendMessage msg = AddAssetClass.addAsset(args, chat_id);
         bot.sendEverything(msg);
+        releaseFields();
     }
 
     public static void price(String[] stockTicker)  {
-        System.out.println(stockTicker[0]);
         SendMessage msg = GetStockPrice.getPrice(message, chat_id, stockTicker[0]);
         bot.sendEverything(msg);
     }
 
     public static void pie() {
-       SendPhoto photo = GetPieCommand.pie(sendPhoto, chat_id);
-       if (photo.getCaption() == null) {
-           message.setText("Can't handle");
-           message.setChatId(chat_id);
-           bot.sendEverything(message);
-       } else {
-           bot.sendEverything(photo);
-       }
+        ReturningValues pieStatus = GetPieCommand.pie(sendPhoto, chat_id);
+        if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
+        else bot.sendEverything(pieStatus._photo_);
+        releaseFields();
     }
 
     public static void balance(String[] args){
@@ -72,8 +76,11 @@ public class CommandExecutorClass {
                     edited_message.setText(msg.getText());
                     bot.sendEverything(edited_message);
                 }
-            } else {
-                msg = GetPortfolioClass
+            }
+
+
+            else {
+                     msg = GetPortfolioClass
                         .calcPortfolioBalance(message, chat_id, JedisHandler
                                 .getUserData(chat_id), false);
 
@@ -84,8 +91,8 @@ public class CommandExecutorClass {
                 }});
 
                 msg.setReplyMarkup(keyboard);
-                message = new SendMessage();
                 bot.sendEverything(msg);
             }
+        releaseFields();
     }
 }

@@ -18,7 +18,7 @@ public class GetPieCommand {
                         new InputFile(new ByteArrayInputStream(DiagramClass
                                 .CreateDiagram(userData)
                                 .toByteArray()),
-                                "TD.jpeg")
+                                "PortfolioDiagram.jpeg")
                 );
             }
 

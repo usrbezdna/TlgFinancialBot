@@ -1,16 +1,16 @@
 package com.gamedev;
 
-import java.util.*;
-
-import static java.lang.Math.toIntExact;
-
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
-import org.telegram.telegrambots.meta.api.objects.*;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+
+import java.util.HashMap;
+import java.util.Objects;
+
+import static java.lang.Math.toIntExact;
 
 public class CommandExecutorClass {
 
@@ -27,23 +27,23 @@ public class CommandExecutorClass {
 
     public static void start(){
         SendMessage msg = StartCommand.start(message, chat_id, keyboard);
-        bot.sendMessage(msg);
+        bot.sendEverything(msg);
     }
 
     public static void help(){
         SendMessage msg = HelpCommand.help(message, chat_id);
-        bot.sendMessage(msg);
+        bot.sendEverything(msg);
     }
 
     public static void add(String[] args){
         SendMessage msg = AddAssetClass.addAsset(args, chat_id);
-        bot.sendMessage(msg);
+        bot.sendEverything(msg);
     }
 
     public static void price(String[] stockTicker)  {
         System.out.println(stockTicker[0]);
         SendMessage msg = GetStockPrice.getPrice(message, chat_id, stockTicker[0]);
-        bot.sendMessage(msg);
+        bot.sendEverything(msg);
     }
 
     public static void pie() {
@@ -51,9 +51,9 @@ public class CommandExecutorClass {
        if (photo.getCaption() == null) {
            message.setText("Can't handle");
            message.setChatId(chat_id);
-           bot.sendMessage(message);
+           bot.sendEverything(message);
        } else {
-           bot.sendPhoto(photo);
+           bot.sendEverything(photo);
        }
     }
 
@@ -70,7 +70,7 @@ public class CommandExecutorClass {
                     edited_message.setChatId(chat_id);
                     edited_message.setMessageId(message_id);
                     edited_message.setText(msg.getText());
-                    bot.updateMessage(edited_message);
+                    bot.sendEverything(edited_message);
                 }
             } else {
                 msg = GetPortfolioClass
@@ -85,7 +85,7 @@ public class CommandExecutorClass {
 
                 msg.setReplyMarkup(keyboard);
                 message = new SendMessage();
-                bot.sendMessage(msg);
+                bot.sendEverything(msg);
             }
     }
 }

@@ -3,9 +3,7 @@ package com.gamedev;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class BotClass extends TelegramLongPollingBot {
 
@@ -31,31 +29,17 @@ public class BotClass extends TelegramLongPollingBot {
             CommandParserClass.parseCommand(update);
     }
 
-
-    void sendMessage(SendMessage message){
-        try{
-            execute(message);
+    public <T> void sendEverything (T toBeSend) {
+        try {
+            if (toBeSend instanceof SendPhoto) {
+                 execute((SendPhoto) toBeSend);
+            } else if (toBeSend instanceof SendMessage) {
+                execute((SendMessage) toBeSend);
+            }
         }
-        catch (TelegramApiException e){
+        catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    void updateMessage(EditMessageText message){
-        try{
-            execute(message);
-        }
-        catch (TelegramApiException e){
-            e.printStackTrace();
-        }
-    }
-
-    void sendPhoto(SendPhoto photo){
-        try{
-            execute(photo);
-        }
-        catch (TelegramApiException e){
-            e.printStackTrace();
-        }
-    }
 }

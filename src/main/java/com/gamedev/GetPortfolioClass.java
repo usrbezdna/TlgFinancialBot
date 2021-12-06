@@ -22,7 +22,6 @@ public class GetPortfolioClass {
             Stock currencyObject = YahooFinance.get(stockObj.getCurrency() + "=X");
             while (currencyObject == null){
                 currencyObject = YahooFinance.get(stockObj.getCurrency() + "=X");
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             }
 
 
@@ -35,7 +34,7 @@ public class GetPortfolioClass {
     }
 
     public static HashMap<String, Double> calcPortfolio(Map<String, String> rawPortfolio) {
-        HashMap<String, Double> processedPortfolio = new HashMap<String, Double>();
+        HashMap<String, Double> processedPortfolio = new HashMap<>();
 
         for (Map.Entry<String, String> stock : rawPortfolio.entrySet()) {
             try {

@@ -13,7 +13,7 @@ public class CommandParserClass {
         void run(String[] s);
     }
 
-    public static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner> ();
+    public static final HashMap<String, MethodRunner> CommandList = new HashMap<>();
 
     public static void parseCommand(Update update) {
         String command = ""; String data = ""; String argument = "";

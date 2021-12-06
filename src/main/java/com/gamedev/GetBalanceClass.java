@@ -12,12 +12,12 @@ import static java.lang.Math.toIntExact;
 public class GetBalanceClass {
     public static ReturningValues getBalance(String[] args, SendMessage message, EditMessageText edited_message,
                                   String chat_id){
-        SendMessage totalPrice = new SendMessage();
+        SendMessage totalPrice;
         if (Objects.equals(args[0], "Callback")) {
             int message_id = toIntExact(Long.parseLong(args[2]));
             if (args[1].equals("detailed")) {
 
-                totalPrice = GetPortfolioClass
+                GetPortfolioClass
                         .calcPortfolioBalance(message, chat_id, JedisHandler
                                 .getUserData(chat_id), true);
 
@@ -36,7 +36,7 @@ public class GetBalanceClass {
             InlineKeyboardMarkup keyboard = KeyboardSetUpClass.setInlineKeyboard(new HashMap<String, String>() {{
                 put("Show detailed portfolio", "/balance detailed");
                 put("Show hello message", "/help");
-                put("Some text", "fasfa");
+                put("Some text", "some random text for msg");
             }});
 
             message.setReplyMarkup(keyboard);

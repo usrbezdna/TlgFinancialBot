@@ -1,5 +1,5 @@
 jar_name=$(ls $WORKSPACE/target | grep jar-with-dependencies.jar)
-$working_dir = $WORKSPACE
+
 if [ -z $(ls /etc/systemd/system | grep bot-daemon.service) ] 
 then 
 echo "\
@@ -13,12 +13,10 @@ User=root
 Type=simple
 Restart=on-failure
 RestartSec=30
-WorkingDirectory="$working_dir"
 EnvironmentFile=/etc/environment.d/bot-d.conf
 ExecStartPre=/bin/bash -c "echo Setting up a BotService... "
 ExecStart=java -jar $jar_name
 ExecStartPost=/bin/bash -c "echo BotService was set "
-
 
 [Install]
 WantedBy=multi-user.target" > $HOME/bot-daemon.service

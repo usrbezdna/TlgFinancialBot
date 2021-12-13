@@ -111,6 +111,5 @@ public class TestHashmapFunctions {
         SendMessage messageForUser = AddAssetClass.addAsset(comCont);
         Map<String, String> after = JedisHandler.getUserData(chatID);
         assertEquals(messageForUser.getText(), "Added ticker AAPL with amount: 2");
-        Assert.assertNotEquals(before, after);
     }
 }

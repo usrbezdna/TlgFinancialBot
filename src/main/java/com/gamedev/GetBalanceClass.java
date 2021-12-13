@@ -35,8 +35,6 @@ public class GetBalanceClass {
 
             InlineKeyboardMarkup keyboard = KeyboardSetUpClass.setInlineKeyboard(new HashMap<String, String>() {{
                 put("Show detailed portfolio", "/balance detailed");
-                put("Show hello message", "/help");
-                put("Some text", "some random text for msg");
             }});
 
             message.setReplyMarkup(keyboard);

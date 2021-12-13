@@ -23,11 +23,32 @@
 # Task-List
 
 ### Task 0: 
->CommandParser, CommandExecutor classes + Diagram processing + Help message
+>Starting bot ("/start" and "/help" commands). Relocating bot token into an environment variable.
 ### Task 0\': 
 > CI/CD Pipeline using Jenkins Automatization tool. Made as a simple project, not a real pipeline
 ### Task 1: 
-> Exchange API implementation, RedisDB integration with project, Diagram creation based on user's portfolio
+> Base user functions (using Redis database and jFreeChart):
+>* Add asset to user's portfolio
+>* Remove asset from user's portfolio
+>* Get pie diagram of user's assets (only number of each asset)
 
+> Work with Redis integration:
+>* Started on a server
+>* Hid access into an environment variable
+>* Designed database structure base on unique user ID
 ### Task 2: 
-> Will be added soon (TM)
+> Functions to work with stock market:
+>* Get price of an asset
+>* Get total price of user's portfolio (also in USD)
+>* Get detailed diagram of user's assets
+
+> Work with Yahoo Finance integration:
+>* Access to stock
+>* Converting price of different stocks into USD
+>* Calculating user's data using stock
+### Task 3:
+> Advanced callback options:
+>* Detailed portfolio for "/balance" command
+>* Something
+>* Another
+### Task 4:

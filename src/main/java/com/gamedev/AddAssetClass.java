@@ -26,7 +26,8 @@ public class AddAssetClass {
                 if (userData == null) {
                     userData = new HashMap<String, String>();
                 }
-                userData.put(ticker, amount);
+                userData.merge(ticker, amount,
+                        (oldValue, newValue) -> String.valueOf(Integer.parseInt(oldValue) + Integer.parseInt(newValue)));
                 JedisHandler.setUserData(chat_id, (HashMap<String, String>) userData);
                 message.setText(String.format("Added ticker %s with amount %s", ticker, amount));
             }

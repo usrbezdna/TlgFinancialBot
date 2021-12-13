@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.Map;
 
 public class GetPieCommand {
-    public static ReturningValues pie(SendPhoto sendPhoto, String chat_id){
+    public static ReturningValues pie(SendPhoto sendPhoto, String chat_id, Boolean numFlag){
         sendPhoto.setChatId(chat_id);
 
         SendMessage message = new SendMessage();
@@ -20,11 +20,11 @@ public class GetPieCommand {
             if (userData != null) {
                 sendPhoto.setPhoto(
                         new InputFile(new ByteArrayInputStream(DiagramClass
-                                .CreateDiagram(userData)
+                                .CreateDiagram(userData, numFlag)
                                 .toByteArray()),
                                 "PortfolioDiagram.jpeg")
                 );
-                sendPhoto.setCaption("This diagram was made for test. Enjoy!");
+                sendPhoto.setCaption("Diagram of your assets with their cost.");
             }
 
         } catch (IOException e){

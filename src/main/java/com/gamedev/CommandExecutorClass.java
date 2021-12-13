@@ -43,13 +43,27 @@ public class CommandExecutorClass {
         releaseFields();
     }
 
+    public static void remove(String[] args){
+        SendMessage msg = RemoveAssetClass.removeAsset(args, chat_id);
+        bot.sendEverything(msg);
+        releaseFields();
+    }
+
     public static void price(String[] stockTicker)  {
         SendMessage msg = GetStockPrice.getPrice(message, chat_id, stockTicker[0]);
         bot.sendEverything(msg);
     }
 
-    public static void pie() {
-        ReturningValues pieStatus = GetPieCommand.pie(sendPhoto, chat_id);
+    public static void pricePie() {
+        ReturningValues pieStatus = GetPieCommand.pie(sendPhoto, chat_id, false);
+        if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
+        else bot.sendEverything(pieStatus._photo_);
+        releaseFields();
+    }
+
+    //TODO: убрать в один класс
+    public static void numPie() {
+        ReturningValues pieStatus = GetPieCommand.pie(sendPhoto, chat_id, true);
         if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
         else bot.sendEverything(pieStatus._photo_);
         releaseFields();

@@ -37,40 +37,32 @@ public class CommandExecutorClass {
         releaseFields();
     }
 
-    public static void add(String[] args){
-        SendMessage msg = AddAssetClass.addAsset(args, chat_id);
+    public static void add(CommandContainer comCont){
+        SendMessage msg = AddAssetClass.addAsset(comCont);
         bot.sendEverything(msg);
         releaseFields();
     }
 
-    public static void remove(String[] args){
-        SendMessage msg = RemoveAssetClass.removeAsset(args, chat_id);
+    public static void remove(CommandContainer comCont){
+        SendMessage msg = RemoveAssetClass.removeAsset(comCont);
         bot.sendEverything(msg);
         releaseFields();
     }
 
-    public static void price(String[] stockTicker)  {
-        SendMessage msg = GetStockPrice.getPrice(message, chat_id, stockTicker[0]);
+    public static void price(CommandContainer comCont)  {
+        SendMessage msg = GetStockPrice.getPrice(comCont);
         bot.sendEverything(msg);
     }
 
-    public static void pricePie() {
-        ReturningValues pieStatus = GetPieCommand.pie(sendPhoto, chat_id, false);
+    public static void pie(Boolean numFlag) {
+        ReturningValues pieStatus = GetPieCommand.pie(sendPhoto, chat_id, numFlag);
         if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
         else bot.sendEverything(pieStatus._photo_);
         releaseFields();
     }
 
-    //TODO: убрать в один класс
-    public static void numPie() {
-        ReturningValues pieStatus = GetPieCommand.pie(sendPhoto, chat_id, true);
-        if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
-        else bot.sendEverything(pieStatus._photo_);
-        releaseFields();
-    }
-
-    public static void balance(String[] args){
-        ReturningValues balanceStatus = GetBalanceClass.getBalance(args, message, edited_message, chat_id);
+    public static void balance(CommandContainer comCont){
+        ReturningValues balanceStatus = GetBalanceClass.getBalance(comCont, message, edited_message, chat_id);
         if (balanceStatus._message_.getText() == null) bot.sendEverything(balanceStatus._edited_message_);
         else bot.sendEverything(balanceStatus._message_);
         releaseFields();

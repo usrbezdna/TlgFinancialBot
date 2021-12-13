@@ -20,9 +20,9 @@ public class GetPieCommand {
             if (userData != null) {
                 sendPhoto.setPhoto(
                         new InputFile(new ByteArrayInputStream(DiagramClass
-                                .CreateDiagram(userData, numFlag)
-                                .toByteArray()),
-                                "PortfolioDiagram.jpeg")
+                                            .CreateDiagram(userData, numFlag)
+                                            .toByteArray()),
+                                    "PortfolioDiagram.jpeg")
                 );
                 sendPhoto.setCaption("Diagram of your assets with their cost.");
             }

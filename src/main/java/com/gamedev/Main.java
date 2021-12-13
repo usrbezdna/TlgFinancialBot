@@ -10,9 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            CommandParserClass.initializeCommands();
             JedisHandler.auth();
-
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
         } catch (Exception e) {

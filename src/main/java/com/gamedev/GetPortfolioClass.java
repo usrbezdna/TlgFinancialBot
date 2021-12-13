@@ -62,7 +62,7 @@ public class GetPortfolioClass {
         for (Map.Entry<String, Double> stock : calculated.entrySet()) {
             balance += stock.getValue();
             if (hasCallback)
-                details.append(stock.getKey()).append(" - ").append(stock.getValue().toString()).append("\n");
+                details.append(stock.getKey()).append(" - ").append(Math.floor(stock.getValue())).append("\n");
         }
 
         double result = Math.floor(balance);

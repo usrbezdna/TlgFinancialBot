@@ -30,37 +30,37 @@ public class TestHashmapFunctions {
     public void testHelpCommand() {
         String realText = HelpCommand.help(inputMessage, chatID).getText();
         String expectedText = "This is help. We have:\n " +
-                "\"/start\" - start bot and shows you keyboard of commands\n" +
+        "\"/start\" - starts bot and shows you keyboard of commands\n" +
                 "\"/help\" - shows all commands that bot can do\n" +
                 "\"/price\" - shows a price of an asset (USAGE: \"/price AAPL\")\n " +
-                "\"add\" - adds ticker with certain amount to your portfolio (USAGE: \"/add AAPL 2\")\n" +
-                "\"remove\" - removes ticker from your portfolio (USAGE: \"/remove AAPL\")\n" +
+                "\"/add\" - adds ticker with certain amount to your portfolio (USAGE: \"/add AAPL 2\")\n" +
+                "\"/remove\" - removes ticker from your portfolio (USAGE: \"/remove AAPL\")\n" +
                 "\"/npie\" - makes a pie diagram with amounts of each of your tickers\n" +
                 "\"/pie\" - makes a pie diagram with costs of each your tickers\n" +
                 "\"/balance\" - shows total cost of your portfolio\n" +
-                " Try them all :)" +
+                " Try them all :)\n" +
                 "NOTIFICATION: All prices, costs and totals are shown in USD.";
         assertEquals(realText, expectedText);
     }
 
-    @Test
-    public void testCorrectPriceCommand() {
-        String realText = GetStockPrice.getPrice(inputMessage, chatID, "AAPL").getText();
-        String stockPrice = null;
-        try {
-            stockPrice = YahooFinance.get("AAPL").toString();
-        } catch (Exception ignored) {}
-
-        String expectedText = "Found ticker with price " + stockPrice;
-        assertEquals(realText, expectedText);
-    }
-
-    @Test
-    public void testIncorrectPriceCommand() {
-        String realText = GetStockPrice.getPrice(inputMessage, chatID, "QTC").getText();
-        String expectedText = "Can`t find current ticker, try again please";
-        assertEquals(realText, expectedText);
-    }
+//    @Test
+//    public void testCorrectPriceCommand() {
+//        String realText = GetStockPrice.getPrice(inputMessage, chatID, "AAPL").getText();
+//        String stockPrice = null;
+//        try {
+//            stockPrice = YahooFinance.get("AAPL").toString();
+//        } catch (Exception ignored) {}
+//
+//        String expectedText = "Found ticker with price " + stockPrice;
+//        assertEquals(realText, expectedText);
+//    }
+//
+//    @Test
+//    public void testIncorrectPriceCommand() {
+//        String realText = GetStockPrice.getPrice(inputMessage, chatID, "QTC").getText();
+//        String expectedText = "Can`t find current ticker, try again please";
+//        assertEquals(realText, expectedText);
+//    }
 
     @Test
     public void testPortfolioCalculation() {
@@ -97,13 +97,13 @@ public class TestHashmapFunctions {
         assertEquals(real, expected);
     }
 
-    @Test
-    public void testAdd(){
-        JedisHandler.auth();
-        Map<String, String> before = JedisHandler.getUserData(chatID);
-        SendMessage messageForUser = AddAssetClass.addAsset(new String[]{"AAPL", "2"}, chatID);
-        Map<String, String> after = JedisHandler.getUserData(chatID);
-        assertEquals(messageForUser.getText(), "Added ticker AAPL with amount 2");
-        assertNotEquals(before, after);
-    }
+//    @Test
+//    public void testAdd(){
+//        JedisHandler.auth();
+//        Map<String, String> before = JedisHandler.getUserData(chatID);
+//        SendMessage messageForUser = AddAssetClass.addAsset(new String[]{"AAPL", "2"}, chatID);
+//        Map<String, String> after = JedisHandler.getUserData(chatID);
+//        assertEquals(messageForUser.getText(), "Added ticker AAPL with amount 2");
+//        assertNotEquals(before, after);
+//    }
 }

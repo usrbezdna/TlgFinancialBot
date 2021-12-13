@@ -4,67 +4,58 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class CommandParserClass {
 
     public interface MethodRunner {
-        void run(String[] s);
+        void run(CommandContainer comCont);
     }
 
-    public static final HashMap<String, MethodRunner> CommandList = new HashMap<>();
+    public static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner>() {{
+        put("/start", args -> CommandExecutorClass.start());
+        put("/help", args -> CommandExecutorClass.help());
+        put("/pie", args -> CommandExecutorClass.pie(false));
+        put("/npie", args -> CommandExecutorClass.pie(true));
 
-    public static void parseCommand(Update update) {
-        String command = ""; String data = ""; String argument = "";
+        put("/balance", CommandExecutorClass::balance);
+        put("/add", CommandExecutorClass::add);
+        put("/remove", CommandExecutorClass::remove);
+        put("/price", CommandExecutorClass::price);
+    }};
 
-        CommandExecutorClass.updateChatID(update);
+    public static void parse(Update update) {
 
-        String[] input = update.getMessage().getText().split(" ");
-        try {
-            command = input[0]; data = input[1]; argument = input[2];
-        } catch (Exception ignored) {}
+        String[] input;
+        String chat_id;
+        String msg_id = null;
+        boolean flagCB = false;
 
-        String[] args = new String[] { data, argument };
-
-        startExecution(command, args);
-    }
-
-    public static void parseCallback(Update update) {
-
+        if (update.hasCallbackQuery()) {
             CallbackQuery callbackQuery = update.getCallbackQuery();
             Message message = callbackQuery.getMessage();
 
-            String[] call_data = callbackQuery.getData().split(" ");
-            String command = call_data[0]; String argument = call_data[1];
+            input = callbackQuery.getData().split("\\s");
+            chat_id = message.getChatId().toString();
+            msg_id = message.getMessageId().toString();
+            flagCB = true;
 
-            String message_id = message.getMessageId().toString();
-            String chat_id = message.getChatId().toString();
-
-            String[] args = new String[] { "Callback", argument, message_id, chat_id };
-            startExecution(command, args);
+        } else {
+            CommandExecutorClass.updateChatID(update);
+            input = update.getMessage().getText().split("\\s");
+            chat_id = update.getMessage().getChatId().toString();
+        }
+        CommandContainer comCont = new CommandContainer(input, flagCB, chat_id, msg_id);
+        startExecution(comCont);
     }
 
-    private static void startExecution (String command, String[] args){
-        if (CommandList.containsKey(command)){
+    private static void startExecution (CommandContainer comCont) {
+        if (CommandList.containsKey(comCont.getCommand()))
             try {
-                CommandList.get(command).run(args);
+                CommandList.get(comCont.getCommand()).run(comCont);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
     }
 
-
-    public static void initializeCommands(){
-        CommandList.put("/start", args -> CommandExecutorClass.start());
-        CommandList.put("/help", args -> CommandExecutorClass.help());
-        CommandList.put("/pie", args -> CommandExecutorClass.pricePie());
-        CommandList.put("/npie", args -> CommandExecutorClass.numPie());
-
-        CommandList.put("/balance", CommandExecutorClass::balance);
-        CommandList.put("/add", CommandExecutorClass::add);
-        CommandList.put("/remove", CommandExecutorClass::remove);
-        CommandList.put("/price", CommandExecutorClass::price);
-    }
 }

@@ -4,11 +4,13 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import yahoofinance.*;
 
 public class GetStockPrice {
-    public static SendMessage getPrice(SendMessage message, String chat_id, String stockTicker) {
-        message.setChatId(chat_id);
+    public static SendMessage getPrice(CommandContainer comCont) {
+        SendMessage message = new SendMessage();
+        message.setChatId(comCont.getChatID());
         String errPrice = "Can`t find current ticker, try again please";
+
         try {
-             String stockPrice = YahooFinance.get(stockTicker).toString();
+             String stockPrice = YahooFinance.get(comCont.getArgument()).toString();
              if (stockPrice.contains("null")) {
                  message.setText(errPrice);
              } else {

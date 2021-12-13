@@ -25,8 +25,7 @@ public class JedisHandler {
 
     public static Map<String, String> getUserData (String chat_id) {
         try{
-            Map<String, String> userData = new ObjectMapper().readValue(db.get(chat_id), new TypeReference<Map<String, String>>(){});
-            return userData;
+            return new ObjectMapper().readValue(db.get(chat_id), new TypeReference<Map<String, String>>(){});
         } catch (Exception ignored){
             return null;
         }
@@ -34,9 +33,5 @@ public class JedisHandler {
 
     public static void setUserData (String chat_id, HashMap<String, String> data) throws JsonProcessingException {
         db.set(chat_id, new ObjectMapper().writeValueAsString(data));
-    }
-
-    public static void flushDataBase() {
-        db.flushDB();
     }
 }

@@ -10,11 +10,9 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
-
 public class DiagramClass{
     public static ByteArrayOutputStream CreateDiagram(Map<String, String> map, Boolean numFlag) throws IOException{
-        int width = 800;
-        int height = 600;
+        int width = 800; int height = 600;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         if (!numFlag) {
             ChartUtilities.writeChartAsJPEG(out, createChart(createPriceDataset(map)), width, height);
@@ -41,7 +39,7 @@ public class DiagramClass{
 
     private static JFreeChart createChart( PieDataset dataset ) {
         return ChartFactory.createPieChart(
-                "Diagram",   // chart title
+                "Your awesome portfolio",   // chart title
                 dataset,          // data
                 true,      // include legend
                 false,

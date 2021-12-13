@@ -10,12 +10,12 @@ import java.util.Objects;
 import static java.lang.Math.toIntExact;
 
 public class GetBalanceClass {
-    public static ReturningValues getBalance(String[] args, SendMessage message, EditMessageText edited_message,
+    public static ReturningValues getBalance(CommandContainer comCont, SendMessage message, EditMessageText edited_message,
                                   String chat_id){
         SendMessage totalPrice;
-        if (Objects.equals(args[0], "Callback")) {
-            int message_id = toIntExact(Long.parseLong(args[2]));
-            if (args[1].equals("detailed")) {
+        if (comCont.hasCallback()) {
+            int message_id = toIntExact(Long.parseLong(comCont.getMsgId()));
+            if (comCont.getArgument().equals("detailed")) {
 
                 GetPortfolioClass
                         .calcPortfolioBalance(message, chat_id, JedisHandler

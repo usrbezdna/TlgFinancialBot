@@ -27,9 +27,6 @@ public class CommandParserClass {
 
         String[] args = new String[] { data, argument };
 
-        System.out.println(command);
-        System.out.println(Arrays.toString(args));
-
         startExecution(command, args);
     }
 
@@ -62,10 +59,12 @@ public class CommandParserClass {
     public static void initializeCommands(){
         CommandList.put("/start", args -> CommandExecutorClass.start());
         CommandList.put("/help", args -> CommandExecutorClass.help());
-        CommandList.put("/pie", args -> CommandExecutorClass.pie());
+        CommandList.put("/pie", args -> CommandExecutorClass.pricePie());
+        CommandList.put("/npie", args -> CommandExecutorClass.numPie());
 
         CommandList.put("/balance", CommandExecutorClass::balance);
         CommandList.put("/add", CommandExecutorClass::add);
+        CommandList.put("/remove", CommandExecutorClass::remove);
         CommandList.put("/price", CommandExecutorClass::price);
     }
 }

@@ -22,6 +22,15 @@ public class CommandContainer
         } catch (Exception ignored) {}
     }
 
+    public CommandContainer(String[] input, String chat_id) {
+        try {
+            this.chat_id = chat_id;
+            this.command = input[0];
+            this.argument = input[1];
+            this.data = input[2];
+        } catch (Exception ignored) {}
+    }
+
     public String getCommand() {
         return this.command;
     }

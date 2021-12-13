@@ -102,14 +102,4 @@ public class TestHashmapFunctions {
         expected.setKeyboard(expRows);
         assertEquals(real, expected);
     }
-
-    @Test
-    public void testAdd(){
-        JedisHandler.auth();
-        Map<String, String> before = JedisHandler.getUserData(chatID);
-        CommandContainer comCont = new CommandContainer("/add AAPL 2".split("\\s"), chatID);
-        SendMessage messageForUser = AddAssetClass.addAsset(comCont);
-        Map<String, String> after = JedisHandler.getUserData(chatID);
-        assertEquals(messageForUser.getText(), "Added ticker AAPL with amount: 2");
-    }
 }

@@ -17,7 +17,7 @@ public class AddAssetClass {
         String errPrice = "Can`t find current ticker, try again please";
 
         if (ticker == null | !isNumeric(amount) ){
-            message.setText("Can't parse your");
+            message.setText("Can't parse your input");
             return message;
         }
 

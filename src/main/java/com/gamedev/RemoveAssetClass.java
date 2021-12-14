@@ -13,7 +13,7 @@ public class RemoveAssetClass {
 
         message.setChatId(chat_id);
         String ticker = comCont.getArgument();
-        String errPrice = "Can`t find current ticker, try again please";
+        String errMsg = "Invalid command";
 
         if (ticker != null){
             ticker = ticker.toUpperCase();
@@ -24,14 +24,16 @@ public class RemoveAssetClass {
                 } else{
                     if (!userData.containsKey(ticker)){
                         message.setText("There's no such ticker in your portfolio.");
+                    }else {
+                        userData.remove(ticker);
+                        JedisHandler.setUserData(chat_id, (HashMap<String, String>) userData);
+                        message.setText(String.format("Removed ticker %s", ticker));
                     }
-                    userData.remove(ticker);
-                    JedisHandler.setUserData(chat_id, (HashMap<String, String>) userData);
                 }
             } catch (Exception ignored) {}
-            message.setText(String.format("Removed ticker %s", ticker));
+
         }
-        else {message.setText(errPrice);}
+        else {message.setText(errMsg);}
         return message;
     }
 }

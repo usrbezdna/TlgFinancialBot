@@ -16,7 +16,7 @@ public class AddAssetClass {
         String chat_id = comCont.getChatID();
         String errPrice = "Can`t find current ticker, try again please";
 
-        if (ticker == null || !isNumeric(amount) ){
+        if (ticker == null || amount == null || !isNumeric(amount)){
             message.setText("Can't parse your input");
             return message;
         } else {ticker = ticker.toUpperCase();}

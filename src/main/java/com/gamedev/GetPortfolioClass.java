@@ -14,7 +14,7 @@ public class GetPortfolioClass {
 
     public static Double getStockPriceUSD(String stockName) throws IOException {
         Stock stockObj = YahooFinance.get(stockName);
-
+        if (stockObj == null) {return null;}
         double currencyRatio;
         if (Objects.equals(stockObj.getCurrency(), "USD")) {
             currencyRatio = 1.0;

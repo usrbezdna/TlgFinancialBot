@@ -12,10 +12,11 @@ public class RemoveAssetClass {
         String chat_id = comCont.getChatID();
 
         message.setChatId(chat_id);
-        String ticker = comCont.getArgument().toUpperCase();
+        String ticker = comCont.getArgument();
         String errPrice = "Can`t find current ticker, try again please";
 
         if (ticker != null){
+            ticker = ticker.toUpperCase();
             try {
                 Map<String, String> userData = JedisHandler.getUserData(chat_id);
                 if (userData == null) {

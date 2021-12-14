@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestHashmapFunctions {
+public class TestBot {
 
     private final SendMessage inputMessage = new SendMessage();
     private final ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();

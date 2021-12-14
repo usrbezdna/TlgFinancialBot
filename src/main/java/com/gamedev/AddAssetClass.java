@@ -11,19 +11,19 @@ public class AddAssetClass {
         SendMessage message = new SendMessage();
         message.setChatId(comCont.getChatID());
 
-        String ticker = comCont.getArgument().toUpperCase();
+        String ticker = comCont.getArgument();
         String amount = comCont.getData();
         String chat_id = comCont.getChatID();
         String errPrice = "Can`t find current ticker, try again please";
 
-        if (ticker == null | !isNumeric(amount) ){
+        if (ticker == null || !isNumeric(amount) ){
             message.setText("Can't parse your input");
             return message;
-        }
+        } else {ticker = ticker.toUpperCase();}
 
         try{
-            String stockPrice = GetPortfolioClass.getStockPriceUSD(ticker).toString();
-            if (stockPrice.contains("null")) {
+            Double stockPrice = GetPortfolioClass.getStockPriceUSD(ticker);
+            if (stockPrice == null) {
                 message.setText(errPrice);
             }  else {
                 Map<String, String> userData = JedisHandler.getUserData(chat_id);

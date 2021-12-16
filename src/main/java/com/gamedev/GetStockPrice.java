@@ -7,19 +7,13 @@ public class GetStockPrice {
     public static SendMessage getPrice(CommandContainer comCont) {
         SendMessage message = new SendMessage();
         message.setChatId(comCont.getChatID());
-        String errPrice = "Can`t find current ticker, try again please";
+        String errPrice = "Invalid ticker. Please make sure that spelling is correct.";
 
-        try {
-             String stockPrice = YahooFinance.get(comCont.getArgument()).toString();
-             if (stockPrice.contains("null")) {
-                 message.setText(errPrice);
-             } else {
-                 message.setText(String.format("Found ticker with price %s", stockPrice));
-             }
-        } catch (Exception e) {
+        Double stockPrice = StockAPI.getStockPriceUSD(comCont.getArgument());
+        if (stockPrice == null)
             message.setText(errPrice);
-            e.printStackTrace();
-        }
+        else message.setText(String.format("Found ticker with price %s", stockPrice));
+
         return message;
     }
 }

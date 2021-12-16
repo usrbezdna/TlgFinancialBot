@@ -6,13 +6,13 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
-public class CommandExecutorClass {
+public class CommandExecutor {
 
     private static SendMessage message = new SendMessage();
     private static SendPhoto sendPhoto = new SendPhoto();
     private static EditMessageText edited_message = new EditMessageText();
-    private static final ReplyKeyboardMarkup keyboard = KeyboardSetUpClass.setReplyKeyboard();
-    private static final BotClass bot = Main.getBot();
+    private static final ReplyKeyboardMarkup keyboard = KeyboardSetUp.setReplyKeyboard();
+    private static final Bot bot = Main.getBot();
     private static String chat_id = "";
 
     public static void updateChatID(Update update){
@@ -38,13 +38,13 @@ public class CommandExecutorClass {
     }
 
     public static void add(CommandContainer comCont){
-        SendMessage msg = AddAssetClass.addAsset(comCont);
+        SendMessage msg = AddAsset.addAsset(comCont);
         bot.sendEverything(msg);
         releaseFields();
     }
 
     public static void remove(CommandContainer comCont){
-        SendMessage msg = RemoveAssetClass.removeAsset(comCont);
+        SendMessage msg = RemoveAsset.removeAsset(comCont);
         bot.sendEverything(msg);
         releaseFields();
     }
@@ -61,8 +61,8 @@ public class CommandExecutorClass {
         releaseFields();
     }
 
-    public static void balance(CommandContainer comCont){
-        ReturningValues balanceStatus = GetBalanceClass.getBalance(comCont, message, edited_message, chat_id);
+    public static void balance(CommandContainer comCont){ //TODO
+        ReturningValues balanceStatus = GetBalance.getBalance(comCont, message, edited_message, chat_id);
         if (balanceStatus._message_.getText() == null) bot.sendEverything(balanceStatus._edited_message_);
         else bot.sendEverything(balanceStatus._message_);
         releaseFields();

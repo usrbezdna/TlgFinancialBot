@@ -19,7 +19,7 @@ public class CommandContainer
             this.command = input[0];
             this.argument = input[1];
             this.data = input[2];
-        } catch (Exception ignored) {}
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     public CommandContainer(String[] input, String chat_id) {
@@ -28,7 +28,7 @@ public class CommandContainer
             this.command = input[0];
             this.argument = input[1];
             this.data = input[2];
-        } catch (Exception ignored) {}
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     public String getCommand() {

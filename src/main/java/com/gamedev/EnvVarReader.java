@@ -1,8 +1,8 @@
 package com.gamedev;
 
-public final class  EnvVarReaderClass {
+public final class EnvVarReader {
 
-    public String ReadEnvVar(String name) {
+    public static String ReadEnvVar(String name) {
         String tokenAsStr = null;
         try {
             tokenAsStr = System.getenv(name);

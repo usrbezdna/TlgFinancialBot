@@ -1,37 +1,44 @@
 package com.gamedev;
-import java.util.HashMap;
-import java.util.Map;
 
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import redis.clients.jedis.Jedis;
 
 public class JedisHandler {
+    private static final Logger logger = LoggerFactory.getLogger(JedisHandler.class);
 
-    private static final String IP = "185.239.208.162";
-    private static final Integer PORT = 6379;
+    private static final String IP =  EnvVarReader.ReadEnvVar("DB_IP");
+    private static final Integer PORT =  Integer.parseInt(EnvVarReader.ReadEnvVar("DB_PORT"));
 
-    private static final String DB_PASS = new EnvVarReaderClass().ReadEnvVar("DB_PASS");
+    private static final String DB_PASS =  EnvVarReader.ReadEnvVar("DB_PASS");
     private static final Jedis db = new Jedis(IP, PORT);
     
     public static void auth(){
         try {
             db.auth(DB_PASS);
         } catch (Exception e)  {
-            e.printStackTrace();
+            logger.error("Error authenticating the database", e);
         }
     }
 
-    public static Map<String, String> getUserData (String chat_id) {
+    public static Map<String, Integer> getUserData (String chat_id) {
         try{
-            return new ObjectMapper().readValue(db.get(chat_id), new TypeReference<Map<String, String>>(){});
-        } catch (Exception ignored){
+            return new ObjectMapper().readValue(db.get(chat_id), new TypeReference<Map<String, Integer>>(){});
+        } catch (Exception e){
+            logger.error("Error in getting the user information", e);
             return null;
         }
     }
 
-    public static void setUserData (String chat_id, HashMap<String, String> data) throws JsonProcessingException {
-        db.set(chat_id, new ObjectMapper().writeValueAsString(data));
+    public static void setUserData (String chat_id, Map<String, Integer> data) {
+        try {
+            db.set(chat_id, new ObjectMapper().writeValueAsString(data));
+        } catch (JsonProcessingException e){ 
+            logger.error("Error in writing users information to database", e); 
+        }
     }
 }

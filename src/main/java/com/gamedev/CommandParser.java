@@ -6,22 +6,22 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.HashMap;
 
-public class CommandParserClass {
+public class CommandParser {
 
     public interface MethodRunner {
         void run(CommandContainer comCont);
     }
 
     public static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner>() {{
-        put("/start", args -> CommandExecutorClass.start());
-        put("/help", args -> CommandExecutorClass.help());
-        put("/pie", args -> CommandExecutorClass.pie(false));
-        put("/npie", args -> CommandExecutorClass.pie(true));
+        put("/start", args -> CommandExecutor.start());
+        put("/help", args -> CommandExecutor.help());
+        put("/pie", args -> CommandExecutor.pie(false));
+        put("/npie", args -> CommandExecutor.pie(true));
 
-        put("/balance", CommandExecutorClass::balance);
-        put("/add", CommandExecutorClass::add);
-        put("/remove", CommandExecutorClass::remove);
-        put("/price", CommandExecutorClass::price);
+        put("/balance", CommandExecutor::balance);
+        put("/add", CommandExecutor::add);
+        put("/remove", CommandExecutor::remove);
+        put("/price", CommandExecutor::price);
     }};
 
     public static void parse(Update update) {
@@ -41,7 +41,7 @@ public class CommandParserClass {
             flagCB = true;
 
         } else {
-            CommandExecutorClass.updateChatID(update);
+            CommandExecutor.updateChatID(update);
             input = update.getMessage().getText().split("\\s");
             chat_id = update.getMessage().getChatId().toString();
         }
@@ -51,8 +51,8 @@ public class CommandParserClass {
 
     private static void startExecution (CommandContainer comCont) {
         if (CommandList.containsKey(comCont.getCommand()))
-            try {
-                CommandList.get(comCont.getCommand()).run(comCont);
+            try {   //TODO get rid of try-catch
+                CommandList.get(comCont.getCommand()).run(comCont); 
             } catch (Exception e) {
                 e.printStackTrace();
             }

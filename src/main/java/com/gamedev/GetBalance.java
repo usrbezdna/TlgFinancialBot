@@ -5,11 +5,10 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import static java.lang.Math.toIntExact;
 
-public class GetBalanceClass {
+public class GetBalance {
     public static ReturningValues getBalance(CommandContainer comCont, SendMessage message, EditMessageText edited_message,
                                   String chat_id){
         SendMessage totalPrice;
@@ -17,7 +16,7 @@ public class GetBalanceClass {
             int message_id = toIntExact(Long.parseLong(comCont.getMsgId()));
             if (comCont.getArgument().equals("detailed")) {
 
-                GetPortfolioClass
+                GetPortfolio
                         .calcPortfolioBalance(message, chat_id, JedisHandler
                                 .getUserData(chat_id), true);
 
@@ -29,11 +28,11 @@ public class GetBalanceClass {
             }
         }
         else {
-            totalPrice = GetPortfolioClass
+            totalPrice = GetPortfolio
                     .calcPortfolioBalance(message, chat_id, JedisHandler
                             .getUserData(chat_id), false);
 
-            InlineKeyboardMarkup keyboard = KeyboardSetUpClass.setInlineKeyboard(new HashMap<String, String>() {{
+            InlineKeyboardMarkup keyboard = KeyboardSetUp.setInlineKeyboard(new HashMap<String, String>() {{
                 put("Show detailed portfolio", "/balance detailed");
             }});
 

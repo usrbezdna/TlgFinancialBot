@@ -1,5 +1,9 @@
 package com.gamedev;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 public class CommandContainer
 {
     private String command;
@@ -10,6 +14,8 @@ public class CommandContainer
     private String msg_id;
 
     private boolean callbackFlag;
+    
+    private static final Logger logger = LoggerFactory.getLogger(CommandContainer.class);
 
     public CommandContainer(String[] input, Boolean callbackFlag, String chat_id, String msg_id) {
         try {
@@ -19,7 +25,11 @@ public class CommandContainer
             this.command = input[0];
             this.argument = input[1];
             this.data = input[2];
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            logger.warn(
+                "Couldn't parse the whole array to commandContainer\n" + e.getMessage()
+            );
+        }
     }
 
     public CommandContainer(String[] input, String chat_id) {
@@ -28,7 +38,11 @@ public class CommandContainer
             this.command = input[0];
             this.argument = input[1];
             this.data = input[2];
-        } catch (Exception ignored) {}
+        } catch (Exception e) { 
+            logger.warn(
+                "Couldn't parse the whole array to commandContainer\n" + e.getMessage()
+            );    
+        }
     }
 
     public String getCommand() {

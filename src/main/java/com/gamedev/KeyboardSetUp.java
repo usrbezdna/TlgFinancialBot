@@ -11,7 +11,7 @@ import java.util.List;
 
 import java.util.stream.*;
 
-public class KeyboardSetUpClass {
+public class KeyboardSetUp {
     public static ReplyKeyboardMarkup setReplyKeyboard(){
 
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();

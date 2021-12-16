@@ -4,8 +4,13 @@ import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import java.io.IOException;
 import java.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class StockAPI {
+    private static final Logger logger = LoggerFactory.getLogger(StockAPI.class);
+
     public static Double getStockPriceUSD(String stockName){
         Stock stockObj = getStock(stockName);
         if (stockObj == null || stockObj.getCurrency() == null) { return null; }
@@ -23,7 +28,7 @@ public class StockAPI {
     private static Stock getStock(String stockName){
         try {
             return YahooFinance.get(stockName);
-        } catch (IOException e) {e.printStackTrace();}
+        } catch (IOException e) { logger.error("Got IOException from exchange API", e);}
         return new Stock(stockName);
     }
 }

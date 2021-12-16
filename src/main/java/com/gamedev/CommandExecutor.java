@@ -61,7 +61,7 @@ public class CommandExecutor {
         releaseFields();
     }
 
-    public static void balance(CommandContainer comCont){ //TODO
+    public static void balance(CommandContainer comCont){
         ReturningValues balanceStatus = GetBalance.getBalance(comCont, message, edited_message, chat_id);
         if (balanceStatus._message_.getText() == null) bot.sendEverything(balanceStatus._edited_message_);
         else bot.sendEverything(balanceStatus._message_);

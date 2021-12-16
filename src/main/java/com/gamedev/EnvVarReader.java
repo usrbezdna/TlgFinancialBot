@@ -1,6 +1,12 @@
 package com.gamedev;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 public final class EnvVarReader {
+
+    private static final Logger logger = LoggerFactory.getLogger(EnvVarReader.class);
 
     public static String ReadEnvVar(String name) {
         String tokenAsStr = null;
@@ -8,7 +14,7 @@ public final class EnvVarReader {
             tokenAsStr = System.getenv(name);
         }
         catch (SecurityException e) {
-            e.printStackTrace();
+            logger.error(name + " environment variables wasn't found");
             System.exit(1);
         }
         return tokenAsStr;

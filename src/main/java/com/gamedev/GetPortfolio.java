@@ -1,14 +1,8 @@
 package com.gamedev;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
 public class GetPortfolio {
 
@@ -40,8 +34,9 @@ public class GetPortfolio {
             balance += stock.getValue();
             if (hasCallback)
                 details.append(stock.getKey())
-                        .append(" - ")
+                        .append(" - $")
                         .append(Math.round(stock.getValue() * 100.0) / 100.0)
+                        .append(String.format(" (%d pcs)", portfolio.get(stock.getKey())))
                         .append("\n");
         }
 

@@ -51,8 +51,8 @@ public class CommandParser {
 
     private static void startExecution (CommandContainer comCont) {
         if (CommandList.containsKey(comCont.getCommand()))
-            try {
-                CommandList.get(comCont.getCommand()).run(comCont);
+            try {   //TODO get rid of try-catch
+                CommandList.get(comCont.getCommand()).run(comCont); 
             } catch (Exception e) {
                 e.printStackTrace();
             }

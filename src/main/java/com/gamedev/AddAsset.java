@@ -1,10 +1,14 @@
 package com.gamedev;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AddAsset {
+    private static final Logger logger = LoggerFactory.getLogger(AddAsset.class);
+
     public static SendMessage addAsset (CommandContainer comCont){
 
         SendMessage message = new SendMessage();
@@ -13,15 +17,15 @@ public class AddAsset {
         String ticker = comCont.getArgument();
         String amount = comCont.getData();
         int intAmount;
-        try{
+        try {
             if (amount == null) {
                 message.setText("Please specify number of assets");
                 return message;
             }
             else
                 intAmount = Integer.parseInt(amount);
-        }catch (NumberFormatException e){
-            e.printStackTrace();
+        } catch (NumberFormatException e){
+            logger.warn("Couldn't parse " + amount + "as integer, returned error to user");
             message.setText("Please specify correct amount");
             return message;
         }
@@ -29,6 +33,7 @@ public class AddAsset {
         String errPrice = "Can`t find current ticker, try again please";
 
         if (ticker == null){
+            logger.warn("Ticker is not provided");
             message.setText("Can't parse your input");
             return message;
         } else {ticker = ticker.toUpperCase();}

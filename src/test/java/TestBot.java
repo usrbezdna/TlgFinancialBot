@@ -8,11 +8,14 @@ import yahoofinance.YahooFinance;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertEquals;
 
 public class TestBot {
 
+    private static final Logger logger = LoggerFactory.getLogger(TestBot.class);
     private final SendMessage inputMessage = new SendMessage();
     private final ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
     private final String chatID = "1337";
@@ -46,12 +49,18 @@ public class TestBot {
     public void testCorrectPriceCommand() {
         CommandContainer comCont = new CommandContainer("/price AAPL".split("\\s"), chatID);
         String realText = GetStockPrice.getPrice(comCont).getText();
-        String stockPrice = null;
+        Double stockPrice = null;
         try {
-            stockPrice = YahooFinance.get("AAPL").toString();
-        } catch (Exception ignored) {} //TODO
+            stockPrice = Math.round(
+                            YahooFinance.get("AAPL")
+                                .getQuote()
+                                .getPrice()
+                                .doubleValue() * 100.0) / 100.0;
+        } catch (Exception e) {
+            logger.error("Error when getting price from exchange", e);
+        }
 
-        String expectedText = "Found ticker with price " + stockPrice;
+        String expectedText = "Found ticker with price " + stockPrice.toString();
         assertEquals(realText, expectedText);
     }
 
@@ -59,7 +68,7 @@ public class TestBot {
     public void testIncorrectPriceCommand() {
         CommandContainer comCont = new CommandContainer("/price QTC".split("\\s"), chatID);
         String realText = GetStockPrice.getPrice(comCont).getText();
-        String expectedText = "Can`t find current ticker, try again please";
+        String expectedText = "Invalid ticker. Please make sure that spelling is correct.";
         assertEquals(realText, expectedText);
     }
 
@@ -68,10 +77,12 @@ public class TestBot {
         HashMap<String, Integer> testMap = new HashMap<String, Integer>(){{put("AAPL", 3); put("AMD", 2);}};
         SendMessage real = GetPortfolio.calcPortfolioBalance(inputMessage, chatID, testMap, false);
         try {
-            double expected = Math.floor(StockAPI.getStockPriceUSD("AAPL") * 3
-                    + StockAPI.getStockPriceUSD("AMD") * 2);
+            double expected = Math.round((StockAPI.getStockPriceUSD("AAPL") * 3
+                    + StockAPI.getStockPriceUSD("AMD") * 2) * 100.0) / 100.0;
             assertEquals(real.getText(), "$" + expected);
-        }catch (Exception ignored){} //TODO
+        } catch (Exception e){
+            logger.error("Error when getting price from exchange", e);
+        }
     }
 
     @Test
@@ -84,9 +95,14 @@ public class TestBot {
             double expectedAMD =  StockAPI.getStockPriceUSD("AMD") * 4;
             double total = expectedAAPL + expectedAMD;
 
-            assertEquals(real.getText(), String.format("$%s\nAAPL - %s\nAMD - %s\n", Math.floor(total),
-                    Math.floor(expectedAAPL), Math.floor(expectedAMD)));
-        } catch (Exception ignored){} //TODO
+            assertEquals(real.getText(), String.format("$%s\nAAPL - $%s (1 pcs)\nAMD - $%s (4 pcs)\n", 
+                    Math.round(total * 100) / 100.0,
+                    Math.round(expectedAAPL * 100) / 100.0, 
+                    Math.round(expectedAMD * 100) / 100.0
+                ));
+        } catch (Exception e){
+            logger.error("Error when getting price from exchange", e);
+        }
     }
 
     @Test

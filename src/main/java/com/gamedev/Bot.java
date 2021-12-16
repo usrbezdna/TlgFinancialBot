@@ -6,9 +6,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-public class BotClass extends TelegramLongPollingBot {
+public class Bot extends TelegramLongPollingBot {
 
-    private static final String TOKEN = new EnvVarReaderClass().ReadEnvVar("TOKEN");
+    private static final String TOKEN = EnvVarReader.ReadEnvVar("TOKEN");
     private static final String BOT_NAME = "AwesomeFinancialBot";
 
     @Override
@@ -23,11 +23,7 @@ public class BotClass extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-
-        if (update.hasCallbackQuery())
-            CommandParserClass.parseCallback(update);
-        else
-            CommandParserClass.parseCommand(update);
+        CommandParser.parse(update);
     }
 
     public <T> void sendEverything (T toBeSend) {

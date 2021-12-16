@@ -10,11 +10,9 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
-
-public class DiagramClass{
-    public static ByteArrayOutputStream CreateDiagram(Map<String, String> map, Boolean numFlag) throws IOException{
-        int width = 800;
-        int height = 600;
+public class Diagram {
+    public static ByteArrayOutputStream createDiagram(Map<String, Integer> map, Boolean numFlag) throws IOException{
+        int width = 800; int height = 600;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         if (!numFlag) {
             ChartUtilities.writeChartAsJPEG(out, createChart(createPriceDataset(map)), width, height);
@@ -22,26 +20,26 @@ public class DiagramClass{
         return out;
     }
 
-    private static PieDataset createPriceDataset(Map<String, String> data){
+    private static PieDataset createPriceDataset(Map<String, Integer> data){
         DefaultPieDataset dataset = new DefaultPieDataset();
-        HashMap<String, Double> calculatedData = GetPortfolioClass.calcPortfolio(data);
+        HashMap<String, Double> calculatedData = GetPortfolio.calcPortfolio(data);
         for (String key: calculatedData.keySet()){
             dataset.setValue(key, calculatedData.get(key));
         }
         return dataset;
     }
 
-    private static PieDataset createNumDataset(Map<String, String> data){
+    private static PieDataset createNumDataset(Map<String, Integer> data){
         DefaultPieDataset dataset = new DefaultPieDataset();
         for (String key: data.keySet()){
-            dataset.setValue(key, Integer.parseInt(data.get(key)));
+            dataset.setValue(key, data.get(key));
         }
         return dataset;
     }
 
     private static JFreeChart createChart( PieDataset dataset ) {
         return ChartFactory.createPieChart(
-                "Diagram",   // chart title
+                "Your awesome portfolio",   // chart title
                 dataset,          // data
                 true,      // include legend
                 false,

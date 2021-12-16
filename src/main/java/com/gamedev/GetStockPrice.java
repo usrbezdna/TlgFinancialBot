@@ -4,20 +4,16 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import yahoofinance.*;
 
 public class GetStockPrice {
-    public static SendMessage getPrice(SendMessage message, String chat_id, String stockTicker) {
-        message.setChatId(chat_id);
-        String errPrice = "Can`t find current ticker, try again please";
-        try {
-             String stockPrice = YahooFinance.get(stockTicker).toString();
-             if (stockPrice.contains("null")) {
-                 message.setText(errPrice);
-             } else {
-                 message.setText(String.format("Found ticker with price %s", stockPrice));
-             }
-        } catch (Exception e) {
+    public static SendMessage getPrice(CommandContainer comCont) {
+        SendMessage message = new SendMessage();
+        message.setChatId(comCont.getChatID());
+        String errPrice = "Invalid ticker. Please make sure that spelling is correct.";
+
+        Double stockPrice = StockAPI.getStockPriceUSD(comCont.getArgument());
+        if (stockPrice == null)
             message.setText(errPrice);
-            e.printStackTrace();
-        }
+        else message.setText(String.format("Found ticker with price %s", stockPrice));
+
         return message;
     }
 }

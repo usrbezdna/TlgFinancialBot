@@ -5,14 +5,12 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
 
-    private static final BotClass bot = new BotClass();
-    public static BotClass getBot() { return bot; }
+    private static final Bot bot = new Bot();
+    public static Bot getBot() { return bot; }
 
     public static void main(String[] args) {
         try {
-            CommandParserClass.initializeCommands();
             JedisHandler.auth();
-
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);
         } catch (Exception e) {

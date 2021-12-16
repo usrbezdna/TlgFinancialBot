@@ -15,14 +15,14 @@ public class GetPieCommand {
         message.setChatId(chat_id);
         message.setText("Can't handle current diagram!");
         try {
-            Map<String, String> userData = JedisHandler.getUserData(chat_id);
+            Map<String, Integer> userData = JedisHandler.getUserData(chat_id);
 
             if (userData != null) {
                 sendPhoto.setPhoto(
-                        new InputFile(new ByteArrayInputStream(DiagramClass
-                                .CreateDiagram(userData, numFlag)
-                                .toByteArray()),
-                                "PortfolioDiagram.jpeg")
+                        new InputFile(new ByteArrayInputStream(Diagram
+                                            .createDiagram(userData, numFlag)
+                                            .toByteArray()),
+                                    "PortfolioDiagram.jpeg")
                 );
                 sendPhoto.setCaption("Diagram of your assets with their cost.");
             }

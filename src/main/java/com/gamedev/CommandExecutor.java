@@ -19,58 +19,72 @@ public class CommandExecutor {
         chat_id = String.valueOf(update.getMessage().getChatId());
     }
 
+
     private static void releaseFields(){
         message = new SendMessage();
         sendPhoto = new SendPhoto();
         edited_message = new EditMessageText();
     }
 
-    public static void start(){
-        SendMessage msg = StartCommand.start(message, chat_id, keyboard);
-        bot.sendEverything(msg);
-        releaseFields();
-    }
-
-    public static void help(){
-        SendMessage msg = HelpCommand.help(message, chat_id);
-        bot.sendEverything(msg);
-        releaseFields();
-    }
-
-    public static void add(CommandContainer comCont){
-        SendMessage msg = AddAsset.addAsset(comCont);
-        bot.sendEverything(msg);
-        releaseFields();
-    }
-
-    public static void remove(CommandContainer comCont){
-        SendMessage msg = RemoveAsset.removeAsset(comCont);
-        bot.sendEverything(msg);
-        releaseFields();
-    }
-
-    public static void price(CommandContainer comCont)  {
-        SendMessage msg = GetStockPrice.getPrice(comCont);
-        bot.sendEverything(msg);
-    }
-
-    public static void pie(Boolean numFlag) {
-        ReturningValues pieStatus = GetPieCommand.pie(sendPhoto, chat_id, numFlag);
+    public static void pricePie() {
+        ReturningValues pieStatus = Pricepie.pie(sendPhoto, chat_id);
         if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
         else bot.sendEverything(pieStatus._photo_);
         releaseFields();
     }
 
+    public static void start(){
+        SendMessage msg = Start.start(message, chat_id, keyboard);
+        bot.sendEverything(msg);
+        releaseFields();
+    }
+
+    public static void help(){
+        SendMessage msg = Help.help(message, chat_id);
+        bot.sendEverything(msg);
+        releaseFields();
+    }
+
+    public static void add(CommandContainer comCont){
+        SendMessage msg = Add.addAsset(comCont);
+        bot.sendEverything(msg);
+        releaseFields();
+    }
+
+    public static void remove(CommandContainer comCont){
+        SendMessage msg = Remove.removeAsset(comCont);
+        bot.sendEverything(msg);
+        releaseFields();
+    }
+
+    public static void price(CommandContainer comCont)  {
+        SendMessage msg = Price.getPrice(comCont);
+        bot.sendEverything(msg);
+    }
+
     public static void balance(CommandContainer comCont){
-        ReturningValues balanceStatus = GetBalance.getBalance(comCont, message, edited_message, chat_id);
+        ReturningValues balanceStatus = Balance.getBalance(comCont, message, edited_message, chat_id);
         if (balanceStatus._message_.getText() == null) bot.sendEverything(balanceStatus._edited_message_);
         else bot.sendEverything(balanceStatus._message_);
         releaseFields();
     }
 
     public static void removeAll(){
-        SendMessage removeAllStatus = RemoveAsset.removeAll(chat_id);
+        SendMessage removeAllStatus = RemoveAll.removeAll(chat_id);
         bot.sendEverything(removeAllStatus);
+        releaseFields();
+    }
+
+    public static void printError(){
+        message.setText("Unrecognized command");
+        bot.sendEverything(message);
+        releaseFields();
+    }
+
+    public static void numPie() {
+        ReturningValues pieStatus = Numpie.pie(sendPhoto, chat_id);
+        if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
+        else bot.sendEverything(pieStatus._photo_);
         releaseFields();
     }
 }

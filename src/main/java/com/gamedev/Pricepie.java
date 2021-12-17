@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class GetPieCommand {
-    private static final Logger logger = LoggerFactory.getLogger(GetPieCommand.class);
-
-    public static ReturningValues pie(SendPhoto sendPhoto, String chat_id, Boolean numFlag){
+public class Pricepie{
+    private static final Logger logger = LoggerFactory.getLogger(Pricepie.class);
+    public static int numberOfArgs = 0;
+    public static ReturningValues pie(SendPhoto sendPhoto, String chat_id){
         sendPhoto.setChatId(chat_id);
 
         SendMessage message = new SendMessage();
@@ -25,7 +25,7 @@ public class GetPieCommand {
             if (userData != null) {
                 sendPhoto.setPhoto(
                         new InputFile(new ByteArrayInputStream(Diagram
-                                            .createDiagram(userData, numFlag)
+                                            .createDiagram(userData, false)
                                             .toByteArray()),
                                     "PortfolioDiagram.jpeg")
                 );

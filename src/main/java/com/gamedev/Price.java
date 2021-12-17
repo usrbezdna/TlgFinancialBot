@@ -3,7 +3,8 @@ package com.gamedev;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 
-public class GetStockPrice {
+public class Price {
+    public static int numberOfArgs = 2;
     public static SendMessage getPrice(CommandContainer comCont) {
         SendMessage message = new SendMessage();
         message.setChatId(comCont.getChatID());

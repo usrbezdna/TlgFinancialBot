@@ -17,6 +17,7 @@ public class CommandParser {
         put("/help", args -> CommandExecutor.help());
         put("/pie", args -> CommandExecutor.pie(false));
         put("/npie", args -> CommandExecutor.pie(true));
+        put("/removeAll", args -> CommandExecutor.removeAll());
 
         put("/balance", CommandExecutor::balance);
         put("/add", CommandExecutor::add);
@@ -57,5 +58,4 @@ public class CommandParser {
                 e.printStackTrace();
             }
     }
-
 }

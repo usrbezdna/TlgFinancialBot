@@ -14,6 +14,7 @@ public class CommandContainer
     private String msg_id;
 
     private boolean callbackFlag;
+    private boolean errorFlag;
     
     private static final Logger logger = LoggerFactory.getLogger(CommandContainer.class);
 

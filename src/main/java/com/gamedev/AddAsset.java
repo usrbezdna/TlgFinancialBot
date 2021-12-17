@@ -30,7 +30,7 @@ public class AddAsset {
             return message;
         }
         String chat_id = comCont.getChatID();
-        String errPrice = "Can`t find current ticker, try again please";
+        String errPrice = "Invalid ticker. Please make sure that spelling is correct.";
 
         if (ticker == null){
             logger.warn("Ticker is not provided");

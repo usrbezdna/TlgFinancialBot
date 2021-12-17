@@ -1,5 +1,6 @@
 package com.gamedev;
 
+import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,5 +41,9 @@ public class JedisHandler {
         } catch (JsonProcessingException e){ 
             logger.error("Error in writing users information to database", e); 
         }
+    }
+
+    public static void removeAll(String chatID){
+        setUserData(chatID, new HashMap<>());
     }
 }

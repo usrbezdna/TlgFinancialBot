@@ -67,4 +67,10 @@ public class CommandExecutor {
         else bot.sendEverything(balanceStatus._message_);
         releaseFields();
     }
+
+    public static void removeAll(){
+        SendMessage removeAllStatus = RemoveAsset.removeAll(chat_id);
+        bot.sendEverything(removeAllStatus);
+        releaseFields();
+    }
 }

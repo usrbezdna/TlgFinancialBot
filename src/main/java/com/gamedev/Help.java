@@ -2,8 +2,7 @@ package com.gamedev;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
-public class Help{
-    public static int numberOfArgs = 0;
+public class Help extends BasicCommand{
     public static SendMessage help(SendMessage message, String chat_id) {
         message.setChatId(chat_id);
         message.setText("This is help. We have:\n " +
@@ -19,4 +18,12 @@ public class Help{
                 "NOTIFICATION: All prices, costs and totals are shown in USD.");
         return message;
     }
+
+    @Override
+    public int getNumberOfArgs() {
+        return 0;
+    }
+
+    @Override
+    public void validateArgs(CommandContainer comCont) {}
 }

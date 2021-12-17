@@ -14,8 +14,8 @@ public class CommandParser {
     public static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner>() {{
         put("/start", args -> CommandExecutor.start());
         put("/help", args -> CommandExecutor.help());
-        put("/pie", args -> CommandExecutor.pricePie());
-        put("/npie", args -> CommandExecutor.numPie());
+        put("/pie", args -> CommandExecutor.pie(false));
+        put("/npie", args -> CommandExecutor.pie(true));
         put("/removeAll", args -> CommandExecutor.removeAll());
 
         put("/balance", CommandExecutor::balance);
@@ -46,7 +46,8 @@ public class CommandParser {
             chat_id = update.getMessage().getChatId().toString();
         }
         CommandContainer comCont = new CommandContainer(input, flagCB, chat_id, msg_id);
-        startExecution(comCont);
+        if (comCont.hasError()) CommandExecutor.printError(comCont);
+        else startExecution(comCont);
     }
 
     private static void startExecution (CommandContainer comCont) {

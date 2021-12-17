@@ -3,19 +3,25 @@ package com.gamedev;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class CommandContainer
 {
-    private String command;
+    private final String command;
     private String argument;
     private String data;
 
-    private String chat_id;
-    private String msg_id;
+    private final String chat_id;
+    private final String msg_id;
+    private String errorMessage;
 
-    private boolean callbackFlag;
-    private boolean errorFlag;
-    
+    private final boolean callbackFlag;
+    private boolean errorFlag = false;
+
+
     private static final Logger logger = LoggerFactory.getLogger(CommandContainer.class);
 
     public CommandContainer(String[] input, Boolean callbackFlag, String chat_id, String msg_id) {
@@ -23,30 +29,40 @@ public class CommandContainer
         this.callbackFlag = callbackFlag;
         this.chat_id = chat_id;
         this.command = input[0];
+        String invalidArgument = "Incorrect number of arguments, try \"/help\"";
+
         if (CommandParser.CommandList.containsKey(this.command)) {
-            try {
-                String commandName = this.command.substring(1);
-                commandName = commandName.substring(0,1).toUpperCase() + commandName.substring(1);
-                Class<?> clazz = Class.forName(String.format("com.gamedev.%s", commandName));
-                clazz.getField("numberOfArgs");
-            } catch (ClassNotFoundException | NoSuchFieldException e){logger.warn("Something with class", e);}
-        }
-        else {CommandExecutor.printError();}
+            switch (testMap.get(this.command).getNumberOfArgs()) {
+                case 0: if (this.hasCallback()) { this.argument = input[1]; }
+                        break;
+                case 1: if (input.length == 2) { this.argument = input[1]; }
+                        else this.setError(invalidArgument);
+                        break;
+                case 2: if (input.length == 3) { this.argument = input[1]; this.data = input[2]; }
+                        else this.setError(invalidArgument);
+                        break;
+                default: this.setError(invalidArgument);
+            }
+        } else
+            this.setError("Incorrect command, try \"/help\"");
 
+        if (!this.hasError())
+            testMap.get(this.command).validateArgs(this);
     }
 
-    public CommandContainer(String[] input, String chat_id) {
-        try {
-            this.chat_id = chat_id;
-            this.command = input[0];
-            this.argument = input[1];
-            this.data = input[2];
-        } catch (Exception e) { 
-            logger.warn(
-                "Couldn't parse the whole array to commandContainer\n" + e.getMessage()
-            );    
-        }
-    }
+    private static final HashMap<String, BasicCommand> testMap = new HashMap<String, BasicCommand>() {{
+        put("/start", new Start());
+        put("/help", new Help());
+        put("/pie", new Pie());
+        put("/npie", new Pie());
+        put("/removeAll", new Help());
+
+        put("/balance", new Balance());
+        put("/add", new Add());
+        put("/remove", new Remove());
+        put("/price", new Price());
+    }};
+
 
     public String getCommand() {
         return this.command;
@@ -60,16 +76,29 @@ public class CommandContainer
         return this.data;
     }
 
-    public boolean hasCallback() {
-        return callbackFlag;
-    }
-
     public String getChatID() {
         return this.chat_id;
     }
 
     public String getMsgId() {
         return this.msg_id;
+    }
+
+    public boolean hasCallback() {
+        return this.callbackFlag;
+    }
+
+    public boolean hasError() {
+        return this.errorFlag;
+    }
+
+    public String getErrorMessage(){
+        return this.errorMessage;
+    }
+
+    public void setError(String error){
+        this.errorFlag = true;
+        this.errorMessage = error;
     }
 
 }

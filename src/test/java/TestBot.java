@@ -19,6 +19,8 @@ public class TestBot {
     private final SendMessage inputMessage = new SendMessage();
     private final ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
     private final String chatID = "1337";
+    private final String msgID = "7331";
+    private final boolean callbackFlag = false;
 
 
     @Test
@@ -47,7 +49,8 @@ public class TestBot {
 
     @Test
     public void testCorrectPriceCommand() {
-        CommandContainer comCont = new CommandContainer("/price AAPL".split("\\s"), chatID);
+        CommandContainer comCont = new CommandContainer("/price AAPL".split("\\s"),
+                                    callbackFlag, chatID, msgID);
         String realText = Price.getPrice(comCont).getText();
         Double stockPrice = null;
         try {
@@ -60,16 +63,18 @@ public class TestBot {
             log.error("Error when getting price from exchange", e);
         }
 
-        String expectedText = "Found ticker with price " + stockPrice.toString();
+        assert stockPrice != null;
+        String expectedText = "Found ticker with price " + stockPrice;
         assertEquals(realText, expectedText);
     }
 
     @Test
     public void testIncorrectPriceCommand() {
-        CommandContainer comCont = new CommandContainer("/price QTC".split("\\s"), chatID);
-        String realText = Price.getPrice(comCont).getText();
+        CommandContainer comCont = new CommandContainer("/price QTC".split("\\s"),
+                                    callbackFlag, chatID, msgID);
+        new Price().validateArgs(comCont);
         String expectedText = "Invalid ticker. Please make sure that spelling is correct.";
-        assertEquals(realText, expectedText);
+        assertEquals(comCont.getErrorMessage(), expectedText);
     }
 
 
@@ -77,33 +82,36 @@ public class TestBot {
     public void testPortfolioCalculation() {
         HashMap<String, Integer> testMap = new HashMap<String, Integer>(){{put("AAPL", 3); put("AMD", 2);}};
         SendMessage real = GetPortfolio.calcPortfolioBalance(inputMessage, chatID, testMap, false);
-        try {
-            double expected = Math.round((StockAPI.getStockPriceUSD("AAPL") * 3
-                    + StockAPI.getStockPriceUSD("AMD") * 2) * 100.0) / 100.0;
-            assertEquals(real.getText(), "$" + expected);
-        } catch (Exception e){
-            log.error("Error when getting price from exchange", e);
-        }
+
+        Double aaplPrice = StockAPI.getStockPriceUSD("AAPL");
+        Double amdPrice = StockAPI.getStockPriceUSD("AMD");
+
+        assert aaplPrice != null;
+        assert amdPrice != null;
+
+        double expected = Math.round((aaplPrice * 3 + amdPrice * 2) * 100.0) / 100.0;
+        assertEquals(real.getText(), "$" + expected);
     }
 
     @Test
     public void testPortfolioCallback() {
         HashMap<String, Integer> testPortfolio = new HashMap<String, Integer>(){{put("AAPL", 1); put("AMD", 4);}};
         SendMessage real = GetPortfolio.calcPortfolioBalance(inputMessage, chatID, testPortfolio, true);
-        try {
 
-            double expectedAAPL = StockAPI.getStockPriceUSD("AAPL");
-            double expectedAMD =  StockAPI.getStockPriceUSD("AMD") * 4;
-            double total = expectedAAPL + expectedAMD;
+        Double aaplPrice = StockAPI.getStockPriceUSD("AAPL");
+        Double amdPrice = StockAPI.getStockPriceUSD("AMD");
 
-            assertEquals(real.getText(), String.format("$%s\nAAPL - $%s (1 pcs)\nAMD - $%s (4 pcs)\n", 
-                    Math.round(total * 100) / 100.0,
-                    Math.round(expectedAAPL * 100) / 100.0, 
-                    Math.round(expectedAMD * 100) / 100.0
-                ));
-        } catch (Exception e){
-            log.error("Error when getting price from exchange", e);
-        }
+        assert aaplPrice != null;
+        assert amdPrice != null;
+
+        amdPrice = amdPrice * 4;
+        double total = aaplPrice + amdPrice ;
+
+        assertEquals(real.getText(), String.format("$%s\nAAPL - $%s (1 pcs)\nAMD - $%s (4 pcs)\n",
+                Math.round(total * 100) / 100.0,
+                Math.round(aaplPrice * 100) / 100.0,
+                Math.round(amdPrice * 100) / 100.0
+        ));
     }
 
     @Test
@@ -111,8 +119,10 @@ public class TestBot {
         ReplyKeyboardMarkup real = KeyboardSetUp.setReplyKeyboard();
         List<KeyboardRow> expRows = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
+
         row.add("/help"); row.add("/pie"); row.add("/balance");
         expRows.add(row);
+
         ReplyKeyboardMarkup expected = new ReplyKeyboardMarkup();
         expected.setKeyboard(expRows);
         assertEquals(real, expected);
@@ -120,64 +130,76 @@ public class TestBot {
 
     @Test
     public void testAdd(){
-        CommandContainer comCont = new CommandContainer("/add AAPL 2".split("\\s"), chatID);
+        CommandContainer comCont = new CommandContainer("/add AAPL 2".split("\\s"),
+                                    callbackFlag, chatID, msgID);
         JedisHandler.auth();
         Map<String, Integer> before = JedisHandler.getUserData(chatID);
         SendMessage messageForUser = Add.addAsset(comCont);
+
         Map<String, Integer> after = JedisHandler.getUserData(chatID);
         assertEquals(messageForUser.getText(), "Added ticker AAPL with amount: 2");
+
         assertNotEquals(before, after);
     }
 
     @Test
     public void testAddIncorrectAmount(){
-        CommandContainer comCont = new CommandContainer("/add AAPL qwe".split("\\s"), chatID);
-        SendMessage messageForUser = Add.addAsset(comCont);
-        assertEquals(messageForUser.getText(), "Please specify correct amount");
+        CommandContainer comCont = new CommandContainer("/add AAPL qwe".split("\\s"),
+                                    callbackFlag, chatID, msgID);
+        new Add().validateArgs(comCont);
+        assertEquals(comCont.getErrorMessage(), "Please specify correct amount");
     }
 
     @Test
     public void testAddIncorrectTicker(){
-        CommandContainer comCont = new CommandContainer("/add QwerTY 12".split("\\s"), chatID);
-        SendMessage messageForUser = Add.addAsset(comCont);
-        assertEquals(messageForUser.getText(), "Invalid ticker. Please make sure that spelling is correct.");
+        CommandContainer comCont = new CommandContainer("/add QwerTY 12".split("\\s"),
+                                    callbackFlag, chatID, msgID);
+        new Add().validateArgs(comCont);
+        assertEquals(comCont.getErrorMessage(), "Invalid ticker. Please make sure that spelling is correct.");
     }
 
-    @Test
-    public void testAddWithoutAmount(){
-        CommandContainer comCont = new CommandContainer("/add AAPL".split("\\s"), chatID);
-        SendMessage messageForUser = Add.addAsset(comCont);
-        assertEquals(messageForUser.getText(), "Please specify number of assets");
-    }
 
     @Test
     public void testRemove(){
-        CommandContainer comCont = new CommandContainer("/remove AMD".split("\\s"), chatID);
+
         JedisHandler.auth();
+
+        CommandContainer comCont = new CommandContainer("/remove AMD".split("\\s"),
+                                    callbackFlag, chatID, msgID);
         Map<String, Integer> before = JedisHandler.getUserData(chatID);
-        Add.addAsset(new CommandContainer("/add AMD 30".split("\\s"), chatID));
+
+        Add.addAsset(new CommandContainer("/add AMD 30".split("\\s"),
+                                    callbackFlag, chatID, msgID));
         SendMessage messageForUser = Remove.removeAsset(comCont);
+
         Map<String, Integer> after = JedisHandler.getUserData(chatID);
+
         assertEquals(messageForUser.getText(), "Removed ticker AMD");
         assertEquals(before, after);
     }
 
     @Test
     public void testRemoveIncorrect(){
-        CommandContainer comCont = new CommandContainer("/remove ZXCghoul".split("\\s"), chatID);
         JedisHandler.auth();
-        Add.addAsset(new CommandContainer("/add AAPL 10".split("\\s"), chatID));
+
+        CommandContainer comCont = new CommandContainer("/remove ZXCghoul".split("\\s"),
+                                    callbackFlag, chatID, msgID);
+
+        Add.addAsset(new CommandContainer("/add AAPL 10".split("\\s"),
+                                    callbackFlag, chatID, msgID));
         SendMessage messageForUser = Remove.removeAsset(comCont);
         assertEquals(messageForUser.getText(), "There's no such ticker in your portfolio.");
     }
 
     @Test
     public void testRemoveEmpty(){
-        CommandContainer comCont = new CommandContainer("/remove AMD".split("\\s"), chatID);
         JedisHandler.auth();
+
+        CommandContainer comCont = new CommandContainer("/remove AMD".split("\\s"),
+                                     callbackFlag, chatID, msgID);
         JedisHandler.removeAll(chatID);
+
         SendMessage messageForUser = Remove.removeAsset(comCont);
         assertEquals(messageForUser.getText(), "Your portfolio is empty. Nothing to remove.");
     }
-
 }

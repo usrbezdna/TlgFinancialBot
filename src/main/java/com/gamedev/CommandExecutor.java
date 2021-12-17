@@ -26,13 +26,6 @@ public class CommandExecutor {
         edited_message = new EditMessageText();
     }
 
-    public static void pricePie() {
-        ReturningValues pieStatus = Pricepie.pie(sendPhoto, chat_id);
-        if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
-        else bot.sendEverything(pieStatus._photo_);
-        releaseFields();
-    }
-
     public static void start(){
         SendMessage msg = Start.start(message, chat_id, keyboard);
         bot.sendEverything(msg);
@@ -62,6 +55,13 @@ public class CommandExecutor {
         bot.sendEverything(msg);
     }
 
+    public static void pie(Boolean numFlag) {
+        ReturningValues pieStatus = Pie.pie(sendPhoto, chat_id, numFlag);
+        if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
+        else bot.sendEverything(pieStatus._photo_);
+        releaseFields();
+    }
+
     public static void balance(CommandContainer comCont){
         ReturningValues balanceStatus = Balance.getBalance(comCont, message, edited_message, chat_id);
         if (balanceStatus._message_.getText() == null) bot.sendEverything(balanceStatus._edited_message_);
@@ -75,16 +75,10 @@ public class CommandExecutor {
         releaseFields();
     }
 
-    public static void printError(){
-        message.setText("Unrecognized command");
+    public static void printError(CommandContainer comCont){
+        message.setText(comCont.getErrorMessage());
+        message.setChatId(chat_id);
         bot.sendEverything(message);
-        releaseFields();
-    }
-
-    public static void numPie() {
-        ReturningValues pieStatus = Numpie.pie(sendPhoto, chat_id);
-        if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
-        else bot.sendEverything(pieStatus._photo_);
         releaseFields();
     }
 }

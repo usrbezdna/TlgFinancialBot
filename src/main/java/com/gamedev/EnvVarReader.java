@@ -12,6 +12,7 @@ public final class EnvVarReader {
         String tokenAsStr = null;
         try {
             tokenAsStr = System.getenv(name);
+            System.out.println(tokenAsStr);
         }
         catch (SecurityException e) {
             logger.error(name + " environment variables wasn't found");

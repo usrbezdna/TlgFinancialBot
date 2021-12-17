@@ -13,6 +13,8 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import redis.clients.jedis.Jedis;
+
 @Slf4j
 public class TestBot {
 

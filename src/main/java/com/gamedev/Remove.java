@@ -6,9 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class RemoveAsset {
-    private static final Logger logger = LoggerFactory.getLogger(RemoveAsset.class);
-
+public class Remove {
+    public static int numberOfArgs = 1;
     public static SendMessage removeAsset(CommandContainer comCont){
 
         SendMessage message = new SendMessage();
@@ -34,13 +33,6 @@ public class RemoveAsset {
             }
         }
         else {message.setText(errMsg);}
-        return message;
-    }
-
-    public static SendMessage removeAll(String chatID){
-        SendMessage message = new SendMessage();
-        JedisHandler.removeAll(chatID);
-        message.setText("Removed all tickers.");
         return message;
     }
 }

@@ -6,8 +6,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddAsset {
-    private static final Logger logger = LoggerFactory.getLogger(AddAsset.class);
+public class Add {
+    public static final int numberOfArgs = 2;
+    private static final Logger logger = LoggerFactory.getLogger(Add.class);
 
     public static SendMessage addAsset (CommandContainer comCont){
 
@@ -53,4 +54,5 @@ public class AddAsset {
         }
         return message;
     }
+
 }

@@ -8,7 +8,8 @@ import java.util.HashMap;
 
 import static java.lang.Math.toIntExact;
 
-public class GetBalance {
+public class Balance {
+    public static int numberOfArgs = 0;
     public static ReturningValues getBalance(CommandContainer comCont, SendMessage message, EditMessageText edited_message,
                                   String chat_id){
         SendMessage totalPrice;

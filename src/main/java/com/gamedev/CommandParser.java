@@ -7,7 +7,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.HashMap;
 
 public class CommandParser {
-
     public interface MethodRunner {
         void run(CommandContainer comCont);
     }
@@ -17,6 +16,7 @@ public class CommandParser {
         put("/help", args -> CommandExecutor.help());
         put("/pie", args -> CommandExecutor.pie(false));
         put("/npie", args -> CommandExecutor.pie(true));
+        put("/removeAll", args -> CommandExecutor.removeAll());
 
         put("/balance", CommandExecutor::balance);
         put("/add", CommandExecutor::add);
@@ -46,16 +46,11 @@ public class CommandParser {
             chat_id = update.getMessage().getChatId().toString();
         }
         CommandContainer comCont = new CommandContainer(input, flagCB, chat_id, msg_id);
-        startExecution(comCont);
+        if (comCont.hasError()) CommandExecutor.printError(comCont);
+        else startExecution(comCont);
     }
 
     private static void startExecution (CommandContainer comCont) {
-        if (CommandList.containsKey(comCont.getCommand()))
-            try {   //TODO get rid of try-catch
-                CommandList.get(comCont.getCommand()).run(comCont); 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        CommandList.get(comCont.getCommand()).run(comCont);
     }
-
 }

@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import static java.lang.Math.toIntExact;
 
-public class GetBalance {
+public class Balance extends BasicCommand{
     public static ReturningValues getBalance(CommandContainer comCont, SendMessage message, EditMessageText edited_message,
                                   String chat_id){
         SendMessage totalPrice;
@@ -42,4 +42,12 @@ public class GetBalance {
         }
         return new ReturningValues();
     }
+
+    @Override
+    public int getNumberOfArgs() {
+        return 0;
+    }
+
+    @Override
+    public void validateArgs(CommandContainer comCont) {}
 }

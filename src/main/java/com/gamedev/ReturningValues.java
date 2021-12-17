@@ -20,9 +20,7 @@ public class ReturningValues {
         this._message_ = message;
     }
 
-    public ReturningValues(SendPhoto photo){
-        this._photo_ = photo;
-    }
+    public ReturningValues(SendPhoto photo) { this._photo_ = photo; }
 
     public ReturningValues(EditMessageText editMessageText){
         this._edited_message_ = editMessageText;

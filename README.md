@@ -29,7 +29,7 @@
 
 ## <a href="https://github.com/tooBusyNow/tlgFinancialBot/releases/tag/v1.0-Snapshot"><p> <img alt="" src="https://lh3.googleusercontent.com/qoTqpS1I1RtmndGu27lR94tQxcn0zkFPxjBj9EGnyV-W2oYzGrcY2mnB6Ij8ZEuUgoZi61Lr22YJqQrUascM8omyXQ=w50-h50-e365"  target="_blank"/> **v1.0-Snapshot (e6b8bbc)**   </p> </a>
 
-### 🟡 Task 1: 
+### 🟢 Task 1: 
 > <strong> Base user functions (using Redis database and jFreeChart): 
 >> Add asset to user's portfolio <br>
 >  

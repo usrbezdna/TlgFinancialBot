@@ -13,6 +13,9 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+            System.out.println("PORT is ");
+            System.out.println(EnvVarReader.ReadEnvVar("DB_PORT"));
+            System.out.println( Integer.parseInt(EnvVarReader.ReadEnvVar("DB_PORT")));
             JedisHandler.auth();
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);

@@ -135,6 +135,11 @@ public class TestBot {
         CommandContainer comCont = new CommandContainer("/add AAPL 2".split("\\s"),
                                     callbackFlag, chatID, msgID);
         JedisHandler.auth();
+
+        System.out.println("PORT is ");
+        System.out.println(EnvVarReader.ReadEnvVar("DB_PORT"));
+        System.out.println( Integer.parseInt(EnvVarReader.ReadEnvVar("DB_PORT")));
+
         Map<String, Integer> before = JedisHandler.getUserData(chatID);
         SendMessage messageForUser = Add.addAsset(comCont);
 

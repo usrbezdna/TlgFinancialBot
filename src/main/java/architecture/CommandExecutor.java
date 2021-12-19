@@ -1,10 +1,16 @@
-package com.gamedev;
+package architecture;
 
+import architecture.CommandContainer;
+import architecture.ReturningValues;
+import com.gamedev.Bot;
+import com.gamedev.Main;
+import commands.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import utils.KeyboardSetUp;
 
 public class CommandExecutor {
 
@@ -63,7 +69,7 @@ public class CommandExecutor {
     }
 
     public static void balance(CommandContainer comCont){
-        ReturningValues balanceStatus = Balance.getBalance(comCont, message, edited_message, chat_id);
+        ReturningValues balanceStatus = Balance.getBalance(comCont, message, edited_message);
         if (balanceStatus._message_.getText() == null) bot.sendEverything(balanceStatus._edited_message_);
         else bot.sendEverything(balanceStatus._message_);
         releaseFields();

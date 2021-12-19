@@ -9,15 +9,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import redis.clients.jedis.Jedis;
 
 @Slf4j
 public class TestBot {
 
+    private static final Logger logger = LoggerFactory.getLogger(TestBot.class);
     private final SendMessage inputMessage = new SendMessage();
     private final ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
     private final String chatID = "1337";
@@ -62,7 +64,7 @@ public class TestBot {
                                 .getPrice()
                                 .doubleValue() * 100.0) / 100.0;
         } catch (Exception e) {
-            log.error("Error when getting price from exchange", e);
+            logger.error("Error when getting price from exchange", e);
         }
 
         assert stockPrice != null;

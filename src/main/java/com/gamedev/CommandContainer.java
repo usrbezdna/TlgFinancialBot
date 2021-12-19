@@ -1,11 +1,6 @@
 package com.gamedev;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class CommandContainer
@@ -21,8 +16,6 @@ public class CommandContainer
     private final boolean callbackFlag;
     private boolean errorFlag = false;
 
-
-    private static final Logger logger = LoggerFactory.getLogger(CommandContainer.class);
 
     public CommandContainer(String[] input, Boolean callbackFlag, String chat_id, String msg_id) {
         this.msg_id = msg_id;
@@ -61,6 +54,7 @@ public class CommandContainer
         put("/add", new Add());
         put("/remove", new Remove());
         put("/price", new Price());
+        put("/news", new News());
     }};
 
 

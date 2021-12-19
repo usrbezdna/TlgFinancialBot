@@ -18,6 +18,7 @@ public class CommandParser {
         put("/npie", args -> CommandExecutor.pie(true));
         put("/removeAll", args -> CommandExecutor.removeAll());
 
+        put("/news", CommandExecutor::getNews);
         put("/balance", CommandExecutor::balance);
         put("/add", CommandExecutor::add);
         put("/remove", CommandExecutor::remove);

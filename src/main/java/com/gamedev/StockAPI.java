@@ -31,4 +31,9 @@ public class StockAPI {
         } catch (IOException e) { logger.error("Got IOException from exchange API", e);}
         return new Stock(stockName);
     }
+
+    public static String getCompanyName(String stockName) {
+        Stock stockObj = getStock(stockName);
+        return stockObj.getName();
+    }
 }

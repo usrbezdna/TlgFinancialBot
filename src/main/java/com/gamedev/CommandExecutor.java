@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
+
 public class CommandExecutor {
 
     private static SendMessage message = new SendMessage();
@@ -79,6 +80,13 @@ public class CommandExecutor {
         message.setText(comCont.getErrorMessage());
         message.setChatId(chat_id);
         bot.sendEverything(message);
+        releaseFields();
+    }
+
+    public static void getNews(CommandContainer comCont) {
+        ReturningValues msg = News.news(comCont, message, edited_message);
+        if (msg._message_.getText() == null) bot.sendEverything(msg._edited_message_);
+        else bot.sendEverything(msg._message_);
         releaseFields();
     }
 }

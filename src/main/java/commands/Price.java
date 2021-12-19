@@ -1,9 +1,12 @@
-package com.gamedev;
+package commands;
 
+import architecture.BasicCommand;
+import architecture.CommandContainer;
+import utils.StockAPI;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 
-public class Price extends BasicCommand{
+public class Price extends BasicCommand {
     public static SendMessage getPrice(CommandContainer comCont) {
 
         SendMessage message = new SendMessage();

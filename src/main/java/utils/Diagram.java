@@ -1,4 +1,4 @@
-package com.gamedev;
+package utils;
 
 import org.jfree.chart.ChartFactory;
 import java.io.*;
@@ -35,6 +35,14 @@ public class Diagram {
             dataset.setValue(key, data.get(key));
         }
         return dataset;
+    }
+
+    public static PieDataset getPriceDataset(Map<String, Integer> data){
+        return createPriceDataset(data);
+    }
+
+    public static PieDataset getNumDataset(Map<String, Integer> data){
+        return createNumDataset(data);
     }
 
     private static JFreeChart createChart( PieDataset dataset ) {

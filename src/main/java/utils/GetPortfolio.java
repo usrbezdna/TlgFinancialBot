@@ -1,7 +1,8 @@
-package com.gamedev;
+package utils;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 public class GetPortfolio {

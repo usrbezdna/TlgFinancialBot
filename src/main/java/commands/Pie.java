@@ -1,6 +1,8 @@
-package com.gamedev;
+package commands;
 
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import architecture.BasicCommand;
+import architecture.CommandContainer;
+import architecture.ReturningValues;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import java.io.ByteArrayInputStream;
@@ -8,10 +10,11 @@ import java.io.IOException;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telegram.telegrambots.meta.api.objects.stickers.Sticker;
+import utils.Diagram;
+import utils.JedisHandler;
 
 
-public class Pie extends BasicCommand{
+public class Pie extends BasicCommand {
     private static final Logger logger = LoggerFactory.getLogger(Pie.class);
 
     public static ReturningValues pie(SendPhoto sendPhoto, String chat_id, Boolean numFlag){

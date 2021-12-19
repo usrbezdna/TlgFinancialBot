@@ -1,5 +1,9 @@
-package com.gamedev;
+package commands;
 
+import architecture.BasicCommand;
+import architecture.CommandContainer;
+import utils.JedisHandler;
+import utils.StockAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -41,7 +45,7 @@ public class Add extends BasicCommand {
             if (intAmount <= 0) throw new NumberFormatException();
             return true;
         } catch (NumberFormatException e){
-            logger.warn("Couldn't parse " + amount + "as integer, returned error to user");
+            logger.warn("Couldn't parse " + amount + " as integer, returned error to user");
         } return false;
     }
 

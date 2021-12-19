@@ -1,8 +1,10 @@
-package com.gamedev;
+package commands;
 
+import architecture.BasicCommand;
+import architecture.CommandContainer;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
-public class Help extends BasicCommand{
+public class Help extends BasicCommand {
     public static SendMessage help(SendMessage message, String chat_id) {
         message.setChatId(chat_id);
         message.setText("This is help. We have:\n " +

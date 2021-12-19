@@ -1,11 +1,14 @@
-package com.gamedev;
+package commands;
 
+import architecture.BasicCommand;
+import architecture.CommandContainer;
+import utils.JedisHandler;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.util.Map;
 
 
-public class Remove extends BasicCommand{
+public class Remove extends BasicCommand {
     public static SendMessage removeAsset(CommandContainer comCont){
 
         SendMessage message = new SendMessage();

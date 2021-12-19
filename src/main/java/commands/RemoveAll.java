@@ -1,8 +1,11 @@
-package com.gamedev;
+package commands;
 
+import architecture.BasicCommand;
+import architecture.CommandContainer;
+import utils.JedisHandler;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
-public class RemoveAll extends BasicCommand{
+public class RemoveAll extends BasicCommand {
     public static SendMessage removeAll(String chatID){
         SendMessage message = new SendMessage();
         JedisHandler.removeAll(chatID);

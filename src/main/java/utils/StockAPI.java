@@ -1,4 +1,4 @@
-package com.gamedev;
+package utils;
 
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;

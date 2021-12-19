@@ -1,4 +1,4 @@
-package com.gamedev;
+package architecture;
 
 public abstract class BasicCommand {
     abstract public int getNumberOfArgs();

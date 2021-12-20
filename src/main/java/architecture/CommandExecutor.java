@@ -90,14 +90,15 @@ public class CommandExecutor {
     }
 
     public static void getPortfolioNews(CommandContainer comCont) {
-        ReturningValues msg = PortfolioNews.news(comCont, message, edited_message);
-        if (Objects.equals(msg._message_, new SendMessage())) bot.sendEverything(edited_message);
-        else bot.sendEverything(msg._message_);
+        ReturningValues msg = PortfolioNews.news(comCont, message);
+        bot.sendEverything(msg._message_);
         releaseFields();
     }
 
     public static void getNews (CommandContainer comCont){
-        SendMessage msg = News.getNewsForTicker(comCont, message);
+        ReturningValues msg = News.getNewsForTicker(comCont, message);
+        if (Objects.equals(msg._message_, new SendMessage())) bot.sendEverything(msg._send_voice_);
+        else bot.sendEverything(msg._message_);
         bot.sendEverything(msg);
         releaseFields();
     }

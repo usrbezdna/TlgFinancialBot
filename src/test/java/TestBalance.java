@@ -32,7 +32,7 @@ public class TestBalance {
         assertFalse("Container should not have error", addAAPL.hasError());
         assertFalse("Container should not have error", addAMD.hasError());
 
-        RemoveAll.removeAll(comCont.getChatID());
+        RemoveAll.removeAll(comCont, inputMessage);
         Add.addAsset(addAAPL);
         Add.addAsset(addAMD);
 
@@ -71,7 +71,7 @@ public class TestBalance {
         assertFalse("Container should not have error", addAAPL.hasError());
         assertFalse("Container should not have error", addAMD.hasError());
 
-        RemoveAll.removeAll(comCont.getChatID());
+        RemoveAll.removeAll(comCont, inputMessage);
         Add.addAsset(addAAPL);
         Add.addAsset(addAMD);
 

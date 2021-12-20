@@ -44,6 +44,8 @@ public class TestRemove {
     public void testRemoveWithoutArgument() {
         CommandContainer withoutArgs = new CommandContainer("/remove".split("\\s"), callbackFlag, chatID, msgID);
         assertTrue("Container should have error", withoutArgs.hasError());
+        assertEquals("Should return correct error message",
+                "Incorrect number of arguments, try \"/help\"", withoutArgs.getErrorMessage());
     }
 
     @Test
@@ -80,6 +82,7 @@ public class TestRemove {
         SendMessage messageForUser = RemoveAll.removeAll(comCont.getChatID());
         assertEquals("After removing whole portfolio, it should be empty",
                 new HashMap<String, Integer>(), JedisHandler.getUserData(comCont.getChatID()));
-        assertEquals("", "Removed all tickers.", messageForUser.getText());
+        assertEquals("Should return correct message for user",
+                "Removed all tickers.", messageForUser.getText());
     }
 }

@@ -53,5 +53,7 @@ public class News extends BasicCommand {
     }
 
     @Override
-    public void validateArgs(CommandContainer comCont) {}
+    public void validateArgs(CommandContainer comCont) {
+
+    }
 }

@@ -8,9 +8,11 @@ import com.google.cloud.texttospeech.v1.TextToSpeechClient;
 import com.google.cloud.texttospeech.v1.VoiceSelectionParams;
 import com.google.protobuf.ByteString;
 
+import java.io.IOException;
+
 
 public class SpeechAPI {
-    public static ByteString textToSpeech(String s) throws Exception {
+    public static ByteString textToSpeech(String s) throws IOException {
         try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
             // Set the text input to be synthesized
             SynthesisInput input = SynthesisInput.newBuilder().setText(s).build();

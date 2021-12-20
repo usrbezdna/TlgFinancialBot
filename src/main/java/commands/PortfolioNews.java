@@ -18,20 +18,23 @@ import static java.lang.Math.toIntExact;
 
 public class PortfolioNews extends BasicCommand {
 
-    public static ReturningValues news(CommandContainer comCont, 
-                                            SendMessage message, 
-                                            EditMessageText edited_message) {
+    public static ReturningValues news(CommandContainer comCont, SendMessage message,
+                                       EditMessageText edited_message) {
+
         if (comCont.hasCallback()) {
             int message_id = toIntExact(Long.parseLong(comCont.getMsgId()));
-            String name = StockAPI.getCompanyName(comCont.getArgument());
-            String txt = StockNewsAPI.getNewsMessage(name);
+
+            String companyName = StockAPI.getCompanyName(comCont.getArgument());
+            String newsText = StockNewsAPI.getNewsMessage(companyName);
 
             edited_message.setChatId(comCont.getChatID());
             edited_message.setMessageId(message_id);
-            edited_message.setText(txt);
+            edited_message.setText(newsText);
+
             return new ReturningValues(edited_message);
         } else {
-            message.setText("PortfolioNews");
+
+            message.setText("News for your portfolio");
             message.setChatId(comCont.getChatID());
             
             Map<String, Integer> portfolio = JedisHandler.getUserData(comCont.getChatID());

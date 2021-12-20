@@ -1,7 +1,9 @@
 package utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.JsonArray;
@@ -16,37 +18,49 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class StockNewsAPI {
-    static NewsAPIClient client = NewsAPI.newClientBuilder()
-                                            .setApiKey(EnvVarReader.ReadEnvVar("NEWS_TOKEN"))
-                                            .build();
-
-    private static final Logger logger = LoggerFactory.getLogger(StockNewsAPI.class);
+    private static final NewsAPIClient CLIENT = NewsAPI.newClientBuilder()
+                                                .setApiKey(EnvVarReader.ReadEnvVar("NEWS_TOKEN"))
+                                                .build();
+    private static final Logger LOGGER = LoggerFactory.getLogger(StockNewsAPI.class);
+    private static List<String> DESCRIPTIONS;
 
     private static JsonObject getTopNews(String query) throws IOException, InterruptedException {
-        Map<String, String> everythingParams = EverythingParams.newBuilder()
+        Map<String, String> request = EverythingParams.newBuilder()
                                                 .setSearchQueryInTitle(query)
                                                 .setSortBy("publishedAt")
                                                 .setLanguage("en")
                                                 .build();
 
-        NewsAPIResponse response = client.getEverything(everythingParams);
-        logger.error(String.valueOf(response.getStatusCode()));
+        NewsAPIResponse response = CLIENT.getEverything(request);
+        System.out.println(response.getStatusCode());
+        System.out.println(query);
 
         return response.getBodyAsJson();
     }
 
     private static String parseArticles(JsonObject obj) {
+
+        DESCRIPTIONS = new ArrayList<>();
         StringBuilder msg = new StringBuilder();
-        int counter = 0;
+        int counter = 1;
         final int maxArticles = 5;
 
         JsonArray articles = obj.getAsJsonArray("articles");
-        for (JsonElement art: articles){
-            JsonObject jsonArt = (JsonObject) art;
+        for (JsonElement article: articles){
+
+            JsonObject jsonArt = (JsonObject) article;
             JsonObject source = jsonArt.getAsJsonObject("source");
+
             JsonElement name = source.get("name");
             JsonElement title = jsonArt.get("title");
             JsonElement url = jsonArt.get("url");
+            JsonElement description = jsonArt.get("description");
+
+            DESCRIPTIONS.add(description.toString());
+
+            System.out.println(description);
+
+            msg.append(counter).append(") ");
             for (JsonElement element : Arrays.asList(name, title, url)) {
                 String strElem = element.toString();
                 strElem = strElem.substring(1, strElem.length()-1);
@@ -67,5 +81,9 @@ public class StockNewsAPI {
             e.printStackTrace();
         }
         return query;
+    }
+
+    public static List<String> getDescriptions(){
+        return DESCRIPTIONS;
     }
 } 

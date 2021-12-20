@@ -4,8 +4,10 @@ import architecture.CommandParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import utils.EnvVarReader;
@@ -40,6 +42,8 @@ public class Bot extends TelegramLongPollingBot {
                 execute((SendMessage) toBeSend);
             else if (toBeSend instanceof EditMessageText)
                 execute((EditMessageText) toBeSend);
+            else if (toBeSend instanceof SendVoice)
+                execute((SendVoice) toBeSend);
         }
         catch (Exception e){
             logger.error("Couldn't send message", e);

@@ -2,18 +2,40 @@ package commands;
 import architecture.BasicCommand;
 import architecture.CommandContainer;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import utils.KeyboardSetUp;
 import utils.StockAPI;
 import utils.StockNewsAPI;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class News extends BasicCommand {
 
     public static SendMessage getNewsForTicker(CommandContainer comCont, SendMessage message){
-        String msg = String.format("Latest news for ticker %s", comCont.getArgument()) +
+        String msgText = String.format("Latest news for ticker %s", comCont.getArgument()) +
                 "\n\n" + "===========================\n" +
-                StockNewsAPI.getNewsMessage(comCont.getArgument());
-        message.setText(msg);
+                StockNewsAPI.getNewsMessage(StockAPI.getCompanyName(comCont.getArgument()));
+
+        message.setReplyMarkup(getMessageKeyboard());
+
+
+        message.setText(msgText);
         message.setChatId(comCont.getChatID());
         return message;
+    }
+
+
+    private static InlineKeyboardMarkup getMessageKeyboard(){
+        List<String> descriptions = StockNewsAPI.getDescriptions();
+
+        InlineKeyboardMarkup keyboard = KeyboardSetUp.setInlineKeyboard(new HashMap<String, String>() {{
+            for (int i=0; i< descriptions.size(); i++){
+                String descForAudio = descriptions.get(i).replaceAll("\\s", "_");
+                put(String.valueOf(i+1), "/audio " + descForAudio);
+            }
+        }});
+        return keyboard;
     }
 
 

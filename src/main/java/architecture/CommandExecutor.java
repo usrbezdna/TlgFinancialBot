@@ -4,8 +4,10 @@ import main.Bot;
 import main.Main;
 import commands.*;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -100,6 +102,12 @@ public class CommandExecutor {
     public static void getNews (CommandContainer comCont){
         SendMessage msg = News.getNewsForTicker(comCont, message);
         bot.sendEverything(msg);
+        releaseFields();
+    }
+
+    public static void audio(CommandContainer comCont) {
+        SendVoice audio = Audio.sendAudio(comCont);
+        bot.sendEverything(audio);
         releaseFields();
     }
 }

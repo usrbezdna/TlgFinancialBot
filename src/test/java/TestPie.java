@@ -14,8 +14,6 @@ import static org.junit.Assert.*;
 
 public class TestPie {
 
-    private final SendMessage inputMessage = new SendMessage();
-    private final ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
     private final String chatID = "1337";
     private final String msgID = "7331";
     private final boolean callbackFlag = false;
@@ -58,7 +56,8 @@ public class TestPie {
         CommandContainer redundant = new CommandContainer("/pie qwe 123".split("\\s"),
                 callbackFlag, chatID, msgID);
         assertTrue("Container should have error", redundant.hasError());
-        assertEquals("", "This command does not take any arguments", redundant.getErrorMessage());
+        assertEquals("Should send correct error message",
+                "This command does not take any arguments", redundant.getErrorMessage());
     }
 
     @Test
@@ -70,7 +69,6 @@ public class TestPie {
                 callbackFlag, chatID, msgID);
         CommandContainer addAAPL = new CommandContainer("/add AAPL 4".split("\\s"),
                 callbackFlag, chatID, msgID);
-
         assertFalse("Container should not have mistake", numPie.hasError());
         assertFalse("Container should not have mistake", addAAPL.hasError());
         assertFalse("Container should not have mistake", addAMD.hasError());
@@ -98,6 +96,7 @@ public class TestPie {
         CommandContainer redundant = new CommandContainer("/npie qwe 123".split("\\s"),
                 callbackFlag, chatID, msgID);
         assertTrue("Container should have error", redundant.hasError());
-        assertEquals("", "This command does not take any arguments", redundant.getErrorMessage());
+        assertEquals("Should send correct error message",
+                "This command does not take any arguments", redundant.getErrorMessage());
     }
 }

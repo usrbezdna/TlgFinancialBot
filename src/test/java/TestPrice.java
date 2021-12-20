@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import yahoofinance.YahooFinance;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.Assert.*;
 
 @Slf4j
 public class TestPrice {
@@ -31,7 +31,7 @@ public class TestPrice {
             log.error("Error when getting price from exchange", e);
         }
 
-        assert stockPrice != null;
+        assertNotNull("Returned API object should not be null", stockPrice);
         String expectedText = "Found ticker with price " + stockPrice;
         assertEquals("Should find ticker with correct price", expectedText,realText);
     }

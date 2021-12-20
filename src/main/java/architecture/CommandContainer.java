@@ -1,8 +1,6 @@
 package architecture;
 
 import commands.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
@@ -21,8 +19,6 @@ public class CommandContainer
     private boolean errorFlag = false;
 
 
-    private static final Logger logger = LoggerFactory.getLogger(CommandContainer.class);
-
     public CommandContainer(String[] input, Boolean callbackFlag, String chat_id, String msg_id) {
         this.msg_id = msg_id;
         this.callbackFlag = callbackFlag;
@@ -33,7 +29,7 @@ public class CommandContainer
         if (CommandParser.CommandList.containsKey(this.command)) {
             switch (testMap.get(this.command).getNumberOfArgs()) {
                 case 0: if (this.hasCallback()) { this.argument = input[1]; }
-                        else if (input.length > 1) {this.setError("This command does not take any arguments");}
+                        else if (input.length > 1){this.setError("This command does not take any arguments");}
                         break;
                 case 1: if (input.length == 2) { this.argument = input[1]; }
                         else this.setError(invalidArgument);
@@ -55,12 +51,13 @@ public class CommandContainer
         put("/help", new Help());
         put("/pie", new Pie());
         put("/npie", new Pie());
-        put("/removeAll", new RemoveAll());
+        put("/removeAll", new Help());
 
         put("/balance", new Balance());
         put("/add", new Add());
         put("/remove", new Remove());
         put("/price", new Price());
+        put("/news", new News());
     }};
 
 

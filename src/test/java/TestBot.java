@@ -1,19 +1,16 @@
-import architecture.CommandContainer;
-import commands.*;
+import commands.Help;
+import commands.Start;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import utils.*;
-import yahoofinance.YahooFinance;
+import utils.KeyboardSetUp;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 @Slf4j
 public class TestBot {

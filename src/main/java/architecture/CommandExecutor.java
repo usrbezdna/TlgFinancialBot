@@ -1,9 +1,7 @@
 package architecture;
 
-import architecture.CommandContainer;
-import architecture.ReturningValues;
-import com.gamedev.Bot;
-import com.gamedev.Main;
+import main.Bot;
+import main.Main;
 import commands.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
@@ -11,6 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import utils.KeyboardSetUp;
+
 
 public class CommandExecutor {
 
@@ -85,6 +84,13 @@ public class CommandExecutor {
         message.setText(comCont.getErrorMessage());
         message.setChatId(chat_id);
         bot.sendEverything(message);
+        releaseFields();
+    }
+
+    public static void getNews(CommandContainer comCont) {
+        ReturningValues msg = News.news(comCont, message, edited_message);
+        if (msg._message_.getText() == null) bot.sendEverything(msg._edited_message_);
+        else bot.sendEverything(msg._message_);
         releaseFields();
     }
 }

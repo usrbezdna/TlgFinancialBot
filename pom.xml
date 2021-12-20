@@ -19,7 +19,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.gamedev.Main</mainClass>
+                            <mainClass>main.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -84,12 +84,17 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>RELEASE</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.jzhangdeveloper.newsapi</groupId>
+            <artifactId>newsapi-java</artifactId>
+            <version>1.0.0</version>
+          </dependency>
     </dependencies>
 </project>

@@ -79,7 +79,7 @@ public class TestRemove {
 
         CommandContainer comCont = new CommandContainer("/removeAll".split("\\s"), callbackFlag, chatID, msgID);
         assertFalse("Container should not have error", comCont.hasError());
-        SendMessage messageForUser = RemoveAll.removeAll(comCont.getChatID());
+        SendMessage messageForUser = RemoveAll.removeAll(comCont ,inputMessage);
         assertEquals("After removing whole portfolio, it should be empty",
                 new HashMap<String, Integer>(), JedisHandler.getUserData(comCont.getChatID()));
         assertEquals("Should return correct message for user",

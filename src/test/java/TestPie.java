@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 
 public class TestPie {
 
+    private final SendMessage message = new SendMessage();
     private final String chatID = "1337";
     private final String msgID = "7331";
     private final boolean callbackFlag = false;
@@ -32,7 +33,7 @@ public class TestPie {
         assertFalse("Container should not have mistake", addAAPL.hasError());
         assertFalse("Container should not have mistake", addAMD.hasError());
 
-        RemoveAll.removeAll(pricePie.getChatID());
+        RemoveAll.removeAll(pricePie, message);
         Add.addAsset(addAAPL);
         Add.addAsset(addAMD);
 
@@ -73,7 +74,7 @@ public class TestPie {
         assertFalse("Container should not have mistake", addAAPL.hasError());
         assertFalse("Container should not have mistake", addAMD.hasError());
 
-        RemoveAll.removeAll(numPie.getChatID());
+        RemoveAll.removeAll(numPie, message);
         Add.addAsset(addAAPL);
         Add.addAsset(addAMD);
         Map<String, Integer> userData = JedisHandler.getUserData(numPie.getChatID());

@@ -18,13 +18,14 @@ public class CommandParser {
         put("/help", args -> CommandExecutor.help());
         put("/pie", args -> CommandExecutor.pie(false));
         put("/npie", args -> CommandExecutor.pie(true));
-        put("/removeAll", args -> CommandExecutor.removeAll());
 
-        put("/news", CommandExecutor::getNews);
+        put("/removeAll", CommandExecutor::removeAll);
+        put("/portfolioNews", CommandExecutor::getPortfolioNews);
         put("/balance", CommandExecutor::balance);
         put("/add", CommandExecutor::add);
         put("/remove", CommandExecutor::remove);
         put("/price", CommandExecutor::price);
+        put("/news", CommandExecutor::getNews);
     }};
 
     public static void parse(Update update) {

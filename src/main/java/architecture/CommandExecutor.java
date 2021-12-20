@@ -10,6 +10,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import utils.KeyboardSetUp;
 
+import java.util.Objects;
+
 
 public class CommandExecutor {
 
@@ -69,13 +71,13 @@ public class CommandExecutor {
 
     public static void balance(CommandContainer comCont){
         ReturningValues balanceStatus = Balance.getBalance(comCont, message, edited_message);
-        if (balanceStatus._message_.getText() == null) bot.sendEverything(balanceStatus._edited_message_);
+        if (Objects.equals(balanceStatus._message_, new SendMessage())) bot.sendEverything(balanceStatus._edited_message_);
         else bot.sendEverything(balanceStatus._message_);
         releaseFields();
     }
 
-    public static void removeAll(){
-        SendMessage removeAllStatus = RemoveAll.removeAll(chat_id);
+    public static void removeAll(CommandContainer comCont){
+        SendMessage removeAllStatus = RemoveAll.removeAll(comCont, message);
         bot.sendEverything(removeAllStatus);
         releaseFields();
     }
@@ -87,10 +89,16 @@ public class CommandExecutor {
         releaseFields();
     }
 
-    public static void getNews(CommandContainer comCont) {
-        ReturningValues msg = News.news(comCont, message, edited_message);
-        if (msg._message_.getText() == null) bot.sendEverything(msg._edited_message_);
+    public static void getPortfolioNews(CommandContainer comCont) {
+        ReturningValues msg = PortfolioNews.news(comCont, message, edited_message);
+        if (Objects.equals(msg._message_, new SendMessage())) bot.sendEverything(edited_message);
         else bot.sendEverything(msg._message_);
+        releaseFields();
+    }
+
+    public static void getNews (CommandContainer comCont){
+        SendMessage msg = News.getNewsForTicker(comCont, message);
+        bot.sendEverything(msg);
         releaseFields();
     }
 }

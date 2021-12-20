@@ -9,6 +9,8 @@ import utils.KeyboardSetUp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -47,10 +49,11 @@ public class TestBot {
     public void testKeyboard(){
         ReplyKeyboardMarkup real = KeyboardSetUp.setReplyKeyboard();
         List<KeyboardRow> expRows = new ArrayList<>();
-        KeyboardRow row = new KeyboardRow();
+        KeyboardRow rows = new KeyboardRow();
 
-        row.add("/help"); row.add("/pie"); row.add("/balance");
-        expRows.add(row);
+        List<String> commands = Stream.of("/help", "/pie", "/balance", "/portfolioNews", "/npie")
+                .collect(Collectors.toList());
+        commands.forEach(rows::add); expRows.add(rows);
 
         ReplyKeyboardMarkup expected = new ReplyKeyboardMarkup();
         expected.setKeyboard(expRows);

@@ -18,7 +18,8 @@ public class KeyboardSetUp {
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow rows = new KeyboardRow();
 
-        List<String> commands = Stream.of("/help", "/pie", "/balance").collect(Collectors.toList());
+        List<String> commands = Stream.of("/help", "/pie", "/balance", "/portfolioNews", "/npie")
+                .collect(Collectors.toList());
         commands.forEach(rows::add); keyboard.add(rows);
 
         keyboardMarkup.setKeyboard(keyboard);
@@ -38,13 +39,15 @@ public class KeyboardSetUp {
             button.setText(element.getKey());
             button.setCallbackData(element.getValue());
 
-            rowInline.add(button); counter++;
+            rowInline.add(button);counter++;
 
             if (counter % 2 == 0) {
                 rowsInline.add(rowInline);
                 rowInline =  new ArrayList<>();
             }
+
         }
+        rowsInline.add(rowInline);
 
         markupInline.setKeyboard(rowsInline);
         return markupInline;

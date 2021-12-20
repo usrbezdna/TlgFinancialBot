@@ -25,7 +25,6 @@ public class CommandParser {
         put("/remove", CommandExecutor::remove);
         put("/price", CommandExecutor::price);
         put("/news", CommandExecutor::getNews);
-        put("/audio", CommandExecutor::audio);
     }};
 
     public static void parse(Update update) {

@@ -3,11 +3,8 @@ package architecture;
 import main.Bot;
 import main.Main;
 import commands.*;
-
-import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -93,21 +90,16 @@ public class CommandExecutor {
     }
 
     public static void getPortfolioNews(CommandContainer comCont) {
-        ReturningValues msg = PortfolioNews.news(comCont, message, edited_message);
-        if (Objects.equals(msg._message_, new SendMessage())) bot.sendEverything(edited_message);
-        else bot.sendEverything(msg._message_);
+        ReturningValues msg = PortfolioNews.news(comCont, message);
+        bot.sendEverything(msg._message_);
         releaseFields();
     }
 
     public static void getNews (CommandContainer comCont){
-        SendMessage msg = News.getNewsForTicker(comCont, message);
+        ReturningValues msg = News.getNewsForTicker(comCont, message);
+        if (Objects.equals(msg._message_, new SendMessage())) bot.sendEverything(msg._send_voice_);
+        else bot.sendEverything(msg._message_);
         bot.sendEverything(msg);
-        releaseFields();
-    }
-
-    public static void audio(CommandContainer comCont) {
-        SendVoice audio = Audio.sendAudio(comCont);
-        bot.sendEverything(audio);
         releaseFields();
     }
 }

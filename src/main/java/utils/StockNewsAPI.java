@@ -22,7 +22,7 @@ public class StockNewsAPI {
                                                 .setApiKey(EnvVarReader.ReadEnvVar("NEWS_TOKEN"))
                                                 .build();
     private static final Logger LOGGER = LoggerFactory.getLogger(StockNewsAPI.class);
-    private static List<String> DESCRIPTIONS;
+    private static List<String> descriptions = new ArrayList<>();
 
     private static JsonObject getTopNews(String query) throws IOException, InterruptedException {
         Map<String, String> request = EverythingParams.newBuilder()
@@ -32,15 +32,12 @@ public class StockNewsAPI {
                                                 .build();
 
         NewsAPIResponse response = CLIENT.getEverything(request);
-        System.out.println(response.getStatusCode());
-        System.out.println(query);
-
+        LOGGER.warn(String.valueOf(response.getStatusCode()));
         return response.getBodyAsJson();
     }
 
     private static String parseArticles(JsonObject obj) {
-
-        DESCRIPTIONS = new ArrayList<>();
+        descriptions = new ArrayList<>();
         StringBuilder msg = new StringBuilder();
         int counter = 1;
         final int maxArticles = 5;
@@ -56,9 +53,11 @@ public class StockNewsAPI {
             JsonElement url = jsonArt.get("url");
             JsonElement description = jsonArt.get("description");
 
-            DESCRIPTIONS.add(description.toString());
+            String strDescription = description.toString();
+            if (strDescription.length() > 50)
+                strDescription = strDescription.toString().substring(0, 50);
 
-            System.out.println(description);
+            descriptions.add(parseDescription(strDescription));
 
             msg.append(counter).append(") ");
             for (JsonElement element : Arrays.asList(name, title, url)) {
@@ -70,8 +69,12 @@ public class StockNewsAPI {
             if (counter == maxArticles)
                 break;
             counter++;
-        } 
+        }
         return msg.toString();
+    }
+
+    private static String parseDescription(String s) {
+        return s.replaceAll("\\s", "_");
     }
 
     public static String getNewsMessage(String query) {
@@ -83,7 +86,7 @@ public class StockNewsAPI {
         return query;
     }
 
-    public static List<String> getDescriptions(){
-        return DESCRIPTIONS;
+    public static List<String> getDesctiptions() {
+        return descriptions;
     }
 } 

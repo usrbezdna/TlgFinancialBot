@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,23 @@ public class JedisHandler {
             db.set(chat_id, new ObjectMapper().writeValueAsString(data));
         } catch (JsonProcessingException e){ 
             logger.error("Error in writing users information to database", e); 
+        }
+    }
+
+    public static void setContentData(String id, List<String> data) {
+        try {
+            db.set(id, new ObjectMapper().writeValueAsString(data));
+        } catch (JsonProcessingException e){ 
+            logger.error("Error in writing users information to database", e); 
+        }
+    }
+
+    public static List<String> getContentData(String id) {
+        try{
+            return new ObjectMapper().readValue(db.get(id), new TypeReference<List<String>>(){});
+        } catch (Exception e){
+            logger.error("Error in getting the user information", e);
+            return null;
         }
     }
 

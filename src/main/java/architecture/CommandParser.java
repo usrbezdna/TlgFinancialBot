@@ -1,7 +1,5 @@
 package architecture;
 
-import architecture.CommandContainer;
-import architecture.CommandExecutor;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;

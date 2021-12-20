@@ -64,7 +64,6 @@ public class StockNewsAPI {
         try {
             return parseArticles(getTopNews(query));
         } catch (IOException | InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return query;

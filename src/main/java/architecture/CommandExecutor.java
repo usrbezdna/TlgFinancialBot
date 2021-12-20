@@ -3,6 +3,7 @@ package architecture;
 import main.Bot;
 import main.Main;
 import commands.*;
+
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;

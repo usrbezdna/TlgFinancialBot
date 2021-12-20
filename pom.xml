@@ -19,7 +19,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.gamedev.Main</mainClass>
+                            <mainClass>main.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

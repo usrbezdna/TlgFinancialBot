@@ -1,10 +1,14 @@
-package com.gamedev;
+package commands;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import architecture.*;
+import utils.*;
+
+import utils.StockNewsAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -32,7 +36,7 @@ public class News extends BasicCommand {
             message.setChatId(comCont.getChatID());
             
             Map<String, Integer> portfolio = JedisHandler.getUserData(comCont.getChatID());
-            List<String> tickers = new ArrayList<String>(portfolio.keySet());
+            List<String> tickers = new ArrayList<>(portfolio.keySet());
 
             InlineKeyboardMarkup keyboard = KeyboardSetUp.setInlineKeyboard(new HashMap<String, String>() {{
                 for (String ticker: tickers) 

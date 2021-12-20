@@ -1,4 +1,6 @@
-package com.gamedev;
+package architecture;
+
+import commands.*;
 
 import java.util.HashMap;
 

@@ -1,9 +1,7 @@
 package architecture;
 
-import architecture.CommandContainer;
-import architecture.ReturningValues;
-import com.gamedev.Bot;
-import com.gamedev.Main;
+import main.Bot;
+import main.Main;
 import commands.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;

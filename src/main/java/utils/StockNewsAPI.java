@@ -1,4 +1,4 @@
-package com.gamedev;
+package utils;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -32,13 +32,12 @@ public class StockNewsAPI {
         NewsAPIResponse response = client.getEverything(everythingParams);
         logger.error(String.valueOf(response.getStatusCode()));
 
-        JsonObject headlinesJson = response.getBodyAsJson();
-        return headlinesJson;
+        return response.getBodyAsJson();
     }
 
     private static String parseArticles(JsonObject obj) {
-        String msg = "";
-        Integer counter = 0;
+        StringBuilder msg = new StringBuilder();
+        int counter = 0;
 
         JsonArray articles = obj.getAsJsonArray("articles");
         for (JsonElement art: articles){
@@ -48,14 +47,14 @@ public class StockNewsAPI {
             JsonElement title = jsonArt.get("title");
             JsonElement url = jsonArt.get("url");
             for (JsonElement element : Arrays.asList(name, title, url)) {
-                msg += element.toString() + "\n"; 
+                msg.append(element.toString()).append("\n");
             }
-            msg += "===========================\n";
+            msg.append("===========================\n");
             if (counter == 5)
                 break;
             counter++;
         } 
-        return msg;
+        return msg.toString();
     }
 
     public static String getNewsMessage(String query) {

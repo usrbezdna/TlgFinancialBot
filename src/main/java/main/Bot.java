@@ -1,4 +1,4 @@
-package com.gamedev;
+package main;
 
 import architecture.CommandParser;
 import org.slf4j.Logger;
@@ -42,7 +42,7 @@ public class Bot extends TelegramLongPollingBot {
                 execute((EditMessageText) toBeSend);
         }
         catch (Exception e){
-            logger.error("Couldn't send message", e);;
+            logger.error("Couldn't send message", e);
         }
     }
 

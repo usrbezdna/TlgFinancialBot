@@ -10,12 +10,6 @@ public class ReturningValues {
     public SendPhoto _photo_ = new SendPhoto();
     public EditMessageText _edited_message_ = new EditMessageText();
 
-
-    public ReturningValues(SendMessage message, SendPhoto photo){
-        this._message_ = message;
-        this._photo_ = photo;
-    }
-
     public ReturningValues(SendMessage message){
         this._message_ = message;
     }

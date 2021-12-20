@@ -24,7 +24,7 @@ public class StockNewsAPI {
 
     private static JsonObject getTopNews(String query) throws IOException, InterruptedException {
         Map<String, String> everythingParams = EverythingParams.newBuilder()
-                                                .setSearchQuery(query)
+                                                .setSearchQueryInTitle(query)
                                                 .setSortBy("publishedAt")
                                                 .setLanguage("en")
                                                 .build();
@@ -38,6 +38,7 @@ public class StockNewsAPI {
     private static String parseArticles(JsonObject obj) {
         StringBuilder msg = new StringBuilder();
         int counter = 0;
+        final int maxArticles = 5;
 
         JsonArray articles = obj.getAsJsonArray("articles");
         for (JsonElement art: articles){
@@ -47,10 +48,12 @@ public class StockNewsAPI {
             JsonElement title = jsonArt.get("title");
             JsonElement url = jsonArt.get("url");
             for (JsonElement element : Arrays.asList(name, title, url)) {
-                msg.append(element.toString()).append("\n");
+                String strElem = element.toString();
+                strElem = strElem.substring(1, strElem.length()-1);
+                msg.append(strElem).append("\n");
             }
             msg.append("===========================\n");
-            if (counter == 5)
+            if (counter == maxArticles)
                 break;
             counter++;
         } 

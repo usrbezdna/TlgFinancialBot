@@ -57,6 +57,7 @@ public class CommandContainer
         put("/add", new Add());
         put("/remove", new Remove());
         put("/price", new Price());
+        put("/portfolioNews", new PortfolioNews());
         put("/news", new News());
     }};
 

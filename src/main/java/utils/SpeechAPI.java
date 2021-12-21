@@ -35,8 +35,7 @@ public class SpeechAPI {
                 textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);
       
             // Get the audio contents from the response
-            ByteString audioContents = response.getAudioContent();
-            return audioContents;
+            return response.getAudioContent();
         }
     } 
 }

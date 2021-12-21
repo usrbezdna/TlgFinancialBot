@@ -16,8 +16,8 @@ import java.util.List;
 public class News extends BasicCommand {
 
     public static ReturningValues getNewsForTicker(CommandContainer comCont, SendMessage message){
-        if (comCont.hasCallback() && comCont.getArgument().startsWith("+++++")) {
-            String description = comCont.getArgument().substring(5);
+        if (comCont.hasCallback() && comCont.getArgument().startsWith("/")) {
+            String description = comCont.getArgument().substring(1);
             SendVoice audioDescription = Audio.returnAudio(description.replaceAll("_", "\\s"));
             audioDescription.setChatId(comCont.getChatID());
             return new ReturningValues(audioDescription); 
@@ -33,7 +33,7 @@ public class News extends BasicCommand {
 
         InlineKeyboardMarkup keyboard = KeyboardSetUp.setInlineKeyboard(new HashMap<String, String>() {{
             for (int i = 0; i < descriptions.size(); i++){
-                put(String.valueOf(i+1), "/news " + "+++++" + descriptions.get(i));
+                put(String.valueOf(i+1), "/news " + "/" + descriptions.get(i));
             }
         }});
 
@@ -52,7 +52,7 @@ public class News extends BasicCommand {
     public void validateArgs(CommandContainer comCont) {
         String ticker = comCont.getArgument();
 
-        if (!ticker.startsWith("+++++")){
+        if (!ticker.startsWith("/")){
             Double stockPrice = StockAPI.getStockPriceUSD(ticker);
             if (stockPrice == null) {
                 comCont.setError("Invalid ticker. Please make sure that spelling is correct.");

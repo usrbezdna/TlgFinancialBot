@@ -1,27 +1,52 @@
 import architecture.CommandContainer;
 import commands.Add;
-import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import redis.clients.jedis.Jedis;
 import utils.JedisHandler;
+
 import java.util.Map;
+
 import static org.junit.Assert.*;
 
-@Slf4j
+@Testcontainers
+@RunWith(JUnit4.class)
 public class TestAdd{
+
     private final String chatID = "1337";
     private final String msgID = "7331";
     private final boolean callbackFlag = false;
+    private static Jedis testDataBase;
+
+    @Container
+    private static final GenericContainer<?> redisContainer = new GenericContainer<>("redis:3-alpine")
+            .withExposedPorts(6379);
+
+    @BeforeClass
+    public static void setUp() {
+        redisContainer.start();
+        String contHost = redisContainer.getHost();
+        Integer contPort = redisContainer.getMappedPort(6379);
+        testDataBase = new Jedis(contHost, contPort);
+    }
+
 
     @Test
     public void testCorrectAdd(){
-        CommandContainer comCont = new CommandContainer("/add AAPL 2".split("\\s"), callbackFlag, chatID, msgID);
-        JedisHandler.auth();
+        CommandContainer comCont = new CommandContainer("/add AAPL 2".split("\\s"),
+                                            callbackFlag, chatID, msgID, testDataBase);
 
-        Map<String, Integer> before = JedisHandler.getUserData(chatID);
+        Map<String, Integer> before = JedisHandler.getUserData(chatID, testDataBase);
         SendMessage messageForUser = Add.addAsset(comCont);
 
-        Map<String, Integer> after = JedisHandler.getUserData(chatID);
+        Map<String, Integer> after = JedisHandler.getUserData(chatID, testDataBase);
         assertEquals( "Message should contain correct text",
                 "Added ticker AAPL with amount: 2", messageForUser.getText());
 
@@ -30,8 +55,10 @@ public class TestAdd{
 
     @Test
     public void testAddIncorrectNumberOfArgs() {
-        CommandContainer missingOne = new CommandContainer("/add AAPL".split("\\s"), callbackFlag, chatID, msgID);
-        CommandContainer missingTwo = new CommandContainer("/add".split("\\s"), callbackFlag, chatID, msgID);
+        CommandContainer missingOne = new CommandContainer("/add AAPL".split("\\s"), callbackFlag, chatID,
+                                                                     msgID, testDataBase);
+        CommandContainer missingTwo = new CommandContainer("/add".split("\\s"), callbackFlag, chatID,
+                                                                     msgID, testDataBase);
 
         assertTrue("Command container with one missing argument should have error inside",
                 missingOne.hasError());
@@ -46,13 +73,13 @@ public class TestAdd{
     @Test
     public void testAddIncorrectAmount(){
         CommandContainer notNumber = new CommandContainer("/add AAPL qwe".split("\\s"),
-                callbackFlag, chatID, msgID);
+                callbackFlag, chatID, msgID, testDataBase);
         CommandContainer fractionalAmount = new CommandContainer("/add AAPL 12.7".split("\\s"),
-                callbackFlag, chatID, msgID);
+                callbackFlag, chatID, msgID, testDataBase);
         CommandContainer negativeAmount = new CommandContainer("/add AAPL -15".split("\\s"),
-                callbackFlag, chatID, msgID);
+                callbackFlag, chatID, msgID, testDataBase);
         CommandContainer typoMistake = new CommandContainer("/add AAPL 12w3".split("\\s"),
-                callbackFlag, chatID, msgID);
+                callbackFlag, chatID, msgID, testDataBase);
 
         Add add = new Add();
 
@@ -79,7 +106,7 @@ public class TestAdd{
     @Test
     public void testAddIncorrectTicker(){
         CommandContainer comCont = new CommandContainer("/add QwerTY 12".split("\\s"),
-                callbackFlag, chatID, msgID);
+                callbackFlag, chatID, msgID, testDataBase);
         new Add().validateArgs(comCont);
         assertTrue("Container should have error inside", comCont.hasError());
         assertEquals( "Container should have correct error message",

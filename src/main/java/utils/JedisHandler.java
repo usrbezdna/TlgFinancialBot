@@ -15,36 +15,40 @@ public class JedisHandler {
 
     private static final String IP =  EnvVarReader.ReadEnvVar("DB_IP");
     private static final Integer PORT =  Integer.parseInt(EnvVarReader.ReadEnvVar("DB_PORT"));
-
     private static final String DB_PASS =  EnvVarReader.ReadEnvVar("DB_PASS");
-    private static final Jedis db = new Jedis(IP, PORT);
-    
+
+    private static final Jedis productionDB = new Jedis(IP, PORT);
+
+    public static Jedis getProductionDB(){
+        return  productionDB;
+    }
+
     public static void auth(){
         try {
-            db.auth(DB_PASS);
+            productionDB.auth(DB_PASS);
         } catch (Exception e)  {
             logger.error("Error authenticating the database", e);
         }
     }
 
-    public static Map<String, Integer> getUserData (String chat_id) {
+    public static Map<String, Integer> getUserData (String chat_id, Jedis dataBase) {
         try{
-            return new ObjectMapper().readValue(db.get(chat_id), new TypeReference<Map<String, Integer>>(){});
+            return new ObjectMapper().readValue(dataBase.get(chat_id), new TypeReference<Map<String, Integer>>(){});
         } catch (Exception e){
             logger.error("Error in getting the user information", e);
             return null;
         }
     }
 
-    public static void setUserData (String chat_id, Map<String, Integer> data) {
+    public static void setUserData (String chat_id, Map<String, Integer> data, Jedis dataBase) {
         try {
-            db.set(chat_id, new ObjectMapper().writeValueAsString(data));
+            dataBase.set(chat_id, new ObjectMapper().writeValueAsString(data));
         } catch (JsonProcessingException e){ 
             logger.error("Error in writing users information to database", e); 
         }
     }
 
-    public static void removeAll(String chatID){
-        setUserData(chatID, new HashMap<>());
+    public static void removeAll(String chatID, Jedis dataBase){
+        setUserData(chatID, new HashMap<>(), dataBase);
     }
 }

@@ -62,8 +62,8 @@ public class CommandExecutor {
         bot.sendEverything(msg);
     }
 
-    public static void pie(Boolean numFlag) {
-        ReturningValues pieStatus = Pie.pie(sendPhoto, chat_id, numFlag);
+    public static void pie(CommandContainer comCont, Boolean numFlag) {
+        ReturningValues pieStatus = Pie.pie(comCont, sendPhoto, chat_id, numFlag);
         if (pieStatus._photo_.getCaption() == null) bot.sendEverything(pieStatus._message_);
         else bot.sendEverything(pieStatus._photo_);
         releaseFields();

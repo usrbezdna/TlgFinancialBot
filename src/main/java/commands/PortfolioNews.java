@@ -19,7 +19,7 @@ public class PortfolioNews extends BasicCommand {
         message.setText("News for your portfolio");
         message.setChatId(comCont.getChatID());
         
-        Map<String, Integer> portfolio = JedisHandler.getUserData(comCont.getChatID());
+        Map<String, Integer> portfolio = JedisHandler.getUserData(comCont.getChatID(), comCont.getDataBase());
         if (portfolio == null) {
             message.setText("Something went wrong with database, please try later");
             return message;
@@ -41,7 +41,7 @@ public class PortfolioNews extends BasicCommand {
 
     @Override
     public void validateArgs(CommandContainer comCont) {
-        Map<String, Integer> userPortfolio = JedisHandler.getUserData(comCont.getChatID());
+        Map<String, Integer> userPortfolio = JedisHandler.getUserData(comCont.getChatID(), comCont.getDataBase());
         if (userPortfolio == null || userPortfolio.isEmpty()){
             comCont.setError("Your portfolio is empty");
         }

@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 public class RemoveAll extends BasicCommand {
     public static SendMessage removeAll(CommandContainer comCont, SendMessage message){
-        JedisHandler.removeAll(comCont.getChatID());
+        JedisHandler.removeAll(comCont.getChatID(), comCont.getDataBase());
         message.setChatId(comCont.getChatID());
         message.setText("Removed all tickers.");
         return message;

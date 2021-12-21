@@ -3,6 +3,8 @@ package architecture;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import redis.clients.jedis.Jedis;
+import utils.JedisHandler;
 
 import java.util.HashMap;
 
@@ -14,8 +16,8 @@ public class CommandParser {
     public static final HashMap<String, MethodRunner> CommandList = new HashMap<String, MethodRunner>() {{
         put("/start", args -> CommandExecutor.start());
         put("/help", args -> CommandExecutor.help());
-        put("/pie", args -> CommandExecutor.pie(false));
-        put("/npie", args -> CommandExecutor.pie(true));
+        put("/pie", conCont -> CommandExecutor.pie(conCont, false));
+        put("/npie", conCont -> CommandExecutor.pie(conCont,true));
 
 
         put("/removeAll", CommandExecutor::removeAll);
@@ -33,6 +35,7 @@ public class CommandParser {
         String chat_id;
         String msg_id = null;
         boolean flagCB = false;
+        Jedis prodDB = JedisHandler.getProductionDB();
 
         if (update.hasCallbackQuery()) {
 
@@ -49,7 +52,7 @@ public class CommandParser {
             input = update.getMessage().getText().split("\\s");
             chat_id = update.getMessage().getChatId().toString();
         }
-        CommandContainer comCont = new CommandContainer(input, flagCB, chat_id, msg_id);
+        CommandContainer comCont = new CommandContainer(input, flagCB, chat_id, msg_id, prodDB);
         if (comCont.hasError()) CommandExecutor.printError(comCont);
         else startExecution(comCont);
     }

@@ -2,6 +2,7 @@ package commands;
 
 import architecture.BasicCommand;
 import architecture.CommandContainer;
+import redis.clients.jedis.Jedis;
 import utils.JedisHandler;
 import utils.StockAPI;
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ public class Add extends BasicCommand {
     public static SendMessage addAsset (CommandContainer comCont){
 
         String chat_id = comCont.getChatID();
+        Jedis dataBase = comCont.getDataBase();
 
         SendMessage message = new SendMessage();
         message.setChatId(chat_id);
@@ -27,12 +29,12 @@ public class Add extends BasicCommand {
 
         ticker = ticker.toUpperCase();
 
-        Map<String, Integer> userData = JedisHandler.getUserData(chat_id);
+        Map<String, Integer> userData = JedisHandler.getUserData(chat_id, dataBase);
         if (userData == null)
             userData = new HashMap<>();
 
         userData.merge(ticker, intAmount, Integer::sum);
-        JedisHandler.setUserData(chat_id, userData);
+        JedisHandler.setUserData(chat_id, userData, dataBase);
 
         message.setText(String.format("Added ticker %s with amount: %s", ticker, amount));
         return message;

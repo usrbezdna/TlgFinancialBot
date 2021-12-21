@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import redis.clients.jedis.Jedis;
 import utils.Diagram;
 import utils.JedisHandler;
 
@@ -17,14 +18,13 @@ import utils.JedisHandler;
 public class Pie extends BasicCommand {
     private static final Logger logger = LoggerFactory.getLogger(Pie.class);
 
-    public static ReturningValues pie(SendPhoto sendPhoto, String chat_id, Boolean numFlag){
+    public static ReturningValues pie(CommandContainer comCont, SendPhoto sendPhoto, String chat_id, Boolean numFlag){
 
         sendPhoto.setChatId(chat_id);
         String typeOfDiagram = numFlag ? "amount" : "cost";
 
         try {
-            Map<String, Integer> userData = JedisHandler.getUserData(chat_id);
-
+            Map<String, Integer> userData = JedisHandler.getUserData(chat_id, comCont.getDataBase());
             sendPhoto.setPhoto(
                     new InputFile(new ByteArrayInputStream(Diagram
                                         .createDiagram(userData, numFlag)
@@ -46,7 +46,7 @@ public class Pie extends BasicCommand {
 
     @Override
     public void validateArgs(CommandContainer comCont) {
-        Map<String, Integer> userData = JedisHandler.getUserData(comCont.getChatID());
+        Map<String, Integer> userData = JedisHandler.getUserData(comCont.getChatID(), comCont.getDataBase());
         if (userData == null || userData.isEmpty()){
             comCont.setError("Portfolio is empty, we could not create your diagram");
         }

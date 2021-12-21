@@ -1,28 +1,34 @@
 package architecture;
 
 import commands.*;
+import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
 
 
 public class CommandContainer
 {
-    private final String command;
+
     private String argument;
     private String data;
+    private String errorMessage;
 
+    private final String command;
     private final String chat_id;
     private final String msg_id;
-    private String errorMessage;
+    private final Jedis dataBase;
+
 
     private final boolean callbackFlag;
     private boolean errorFlag = false;
 
 
-    public CommandContainer(String[] input, Boolean callbackFlag, String chat_id, String msg_id) {
+    public CommandContainer(String[] input, Boolean callbackFlag, String chat_id, String msg_id, Jedis db) {
         this.msg_id = msg_id;
         this.callbackFlag = callbackFlag;
         this.chat_id = chat_id;
+        this.dataBase = db;
+
         this.command = input[0];
         String invalidArgument = "Incorrect number of arguments, try \"/help\"";
 
@@ -93,6 +99,8 @@ public class CommandContainer
     public String getErrorMessage(){
         return this.errorMessage;
     }
+
+    public Jedis getDataBase() { return this.dataBase; }
 
     public void setError(String error){
         this.errorFlag = true;

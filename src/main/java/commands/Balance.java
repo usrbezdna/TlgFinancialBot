@@ -24,7 +24,7 @@ public class Balance extends BasicCommand {
 
                 GetPortfolio
                         .calcPortfolioBalance(message, chat_id, JedisHandler
-                                .getUserData(chat_id), true);
+                                .getUserData(chat_id, comCont.getDataBase()), true);
 
                 edited_message.setChatId(chat_id);
                 edited_message.setMessageId(message_id);
@@ -36,7 +36,7 @@ public class Balance extends BasicCommand {
         else {
             totalPrice = GetPortfolio
                     .calcPortfolioBalance(message, chat_id, JedisHandler
-                            .getUserData(chat_id), false);
+                            .getUserData(chat_id, comCont.getDataBase()), false);
 
             InlineKeyboardMarkup keyboard = KeyboardSetUp.setInlineKeyboard(new HashMap<String, String>() {{
                 put("Show detailed portfolio", "/balance detailed");

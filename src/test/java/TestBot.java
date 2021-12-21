@@ -1,10 +1,12 @@
 import commands.Help;
 import commands.Start;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import utils.KeyboardSetUp;
 
 import java.util.ArrayList;
@@ -14,7 +16,8 @@ import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 
-@Slf4j
+@Testcontainers
+@RunWith(JUnit4.class)
 public class TestBot {
 
     private final SendMessage inputMessage = new SendMessage();

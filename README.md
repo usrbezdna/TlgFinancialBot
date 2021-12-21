@@ -15,7 +15,7 @@
 
 # Description
 > Joint project at Ural Federal University focused on implementation of Telegram Bot with Java Programming Language.
- Techological stack: Apache Maven (build automation tool), Redis DB (noSQL DataBase) and Jenkins Pipeline (CI/CD tool).
+ Technological stack: Apache Maven (build automation tool), Redis DB (noSQL DataBase) and Jenkins Pipeline (CI/CD tool).
 
 # FAQ 
 > In progress.... 
@@ -25,7 +25,7 @@
 ### 🟢 Task 0: 
 >Starting bot ("/start" and "/help" commands). Relocating bot token into an environment variable. <br>
 ### 🟢 Task 0\': 
-> CI/CD Pipeline using Jenkins Automatization tool. Made as a simple project, not a real pipeline 
+> CI/CD Pipeline using Jenkins Atomization tool. Made as a simple project, not a real pipeline 
 
 ## <a href="https://github.com/tooBusyNow/tlgFinancialBot/releases/tag/v1.0-Snapshot"><p> <img alt="" src="https://lh3.googleusercontent.com/qoTqpS1I1RtmndGu27lR94tQxcn0zkFPxjBj9EGnyV-W2oYzGrcY2mnB6Ij8ZEuUgoZi61Lr22YJqQrUascM8omyXQ=w50-h50-e365"  target="_blank"/> **v1.0-Snapshot (e6b8bbc)**   </p> </a>
 
@@ -69,4 +69,4 @@
 >
 >> News feature for your assets <br>
 >
->> Buttons with callbacks for interaction </strong>
+>> Buttons with callbacks for interaction </strong> 

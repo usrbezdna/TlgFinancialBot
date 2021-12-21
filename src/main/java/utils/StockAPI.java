@@ -15,6 +15,7 @@ public class StockAPI {
         Stock stockObj = getStock(stockName);
         if (stockObj == null || stockObj.getCurrency() == null) { return null; }
         double currencyRatio = 1.0;
+
         if (!Objects.equals(stockObj.getCurrency(), "USD")) {
             Stock currencyObject = null;
             while (currencyObject == null) {

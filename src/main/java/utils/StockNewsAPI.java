@@ -54,8 +54,9 @@ public class StockNewsAPI {
             JsonElement description = jsonArt.get("description");
 
             String strDescription = description.toString();
+
             if (strDescription.length() > 50)
-                strDescription = strDescription.toString().substring(0, 50);
+                strDescription = strDescription.substring(0, 50);
 
             descriptions.add(parseDescription(strDescription));
 
@@ -86,7 +87,7 @@ public class StockNewsAPI {
         return query;
     }
 
-    public static List<String> getDesctiptions() {
+    public static List<String> getDescriptions() {
         return descriptions;
     }
 } 

@@ -2,18 +2,16 @@ import architecture.CommandContainer;
 import commands.Price;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import yahoofinance.YahooFinance;
 
 import static org.junit.Assert.*;
+
 
 @Slf4j
 public class TestPrice {
     private final String chatID = "1337";
     private final String msgID = "7331";
     private final boolean callbackFlag = false;
-    private final Logger logger = LoggerFactory.getLogger(TestPrice.class);
 
     @Test
     public void testCorrectPriceCommand() {
@@ -27,7 +25,7 @@ public class TestPrice {
                             .getPrice()
                             .doubleValue() * 100.0) / 100.0;
         } catch (Exception e) {
-            logger.error("Error when getting price from exchange", e);
+            log.error("Error when getting price from exchange", e);
         }
 
         assertNotNull("Returned API object should not be null", stockPrice);

@@ -2,11 +2,11 @@ package commands;
 
 import architecture.BasicCommand;
 import architecture.CommandContainer;
-import architecture.ReturningValues;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import utils.JedisHandler;
 import utils.KeyboardSetUp;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class PortfolioNews extends BasicCommand {
 
-    public static ReturningValues news(CommandContainer comCont, SendMessage message) {
+    public static SendMessage news(CommandContainer comCont, SendMessage message) {
 
         message.setText("News for your portfolio");
         message.setChatId(comCont.getChatID());
@@ -22,7 +22,7 @@ public class PortfolioNews extends BasicCommand {
         Map<String, Integer> portfolio = JedisHandler.getUserData(comCont.getChatID());
         if (portfolio == null) {
             message.setText("Something went wrong with database, please try later");
-            return new ReturningValues(message);
+            return message;
         }
         List<String> tickers = new ArrayList<>(portfolio.keySet());
 
@@ -31,7 +31,7 @@ public class PortfolioNews extends BasicCommand {
                 put(ticker, "/news " + ticker);
         }});
         message.setReplyMarkup(keyboard);
-        return new ReturningValues(message);
+        return message;
     }
 
     @Override

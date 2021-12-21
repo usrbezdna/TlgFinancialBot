@@ -12,24 +12,28 @@ import java.io.IOException;
 
 
 public class SpeechAPI {
-    public static ByteString textToSpeech(String textToSpeech) throws IOException {
+    private final VoiceSelectionParams voice;
+    private final AudioConfig audioConfig;
+    public ByteString textToSpeech(String textToSpeech) throws IOException {
         try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
 
             SynthesisInput input = SynthesisInput.newBuilder().setText(textToSpeech).build();
-
-            VoiceSelectionParams voice =
-                VoiceSelectionParams.newBuilder()
-                    .setLanguageCode("en-US")
-                    .setSsmlGender(SsmlVoiceGender.FEMALE)
-                    .build();
-
-            AudioConfig audioConfig =
-                AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.MP3).build();
-
             SynthesizeSpeechResponse response =
                 textToSpeechClient.synthesizeSpeech(input, voice, audioConfig);
 
             return response.getAudioContent();
         }
-    } 
+    }
+
+    public SpeechAPI(){
+         this.voice =
+                VoiceSelectionParams.newBuilder()
+                        .setLanguageCode("en-US")
+                        .setSsmlGender(SsmlVoiceGender.FEMALE)
+                        .build();
+
+         this.audioConfig =
+                AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.MP3).build();
+    }
+
 }

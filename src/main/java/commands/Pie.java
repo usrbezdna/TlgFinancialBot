@@ -20,7 +20,7 @@ public class Pie extends BasicCommand {
     public static ReturningValues pie(SendPhoto sendPhoto, String chat_id, Boolean numFlag){
 
         sendPhoto.setChatId(chat_id);
-        String typeOfDiagram = numFlag ? "cost" : "number";
+        String typeOfDiagram = numFlag ? "amount" : "cost";
 
         try {
             Map<String, Integer> userData = JedisHandler.getUserData(chat_id);

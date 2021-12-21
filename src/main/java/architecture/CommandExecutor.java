@@ -102,4 +102,6 @@ public class CommandExecutor {
         bot.sendEverything(msg);
         releaseFields();
     }
+
+
 }

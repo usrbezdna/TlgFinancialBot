@@ -5,7 +5,6 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.junit.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import utils.Diagram;
 import utils.JedisHandler;
 import utils.StockAPI;
@@ -22,20 +21,24 @@ public class TestPie {
     @Test
     public void testPricePie(){
         JedisHandler.auth();
-        CommandContainer pricePie = new CommandContainer("/pie".split("\\s"),
-                callbackFlag, chatID, msgID);
+
         CommandContainer addAMD = new CommandContainer("/add AMD 2".split("\\s"),
                 callbackFlag, chatID, msgID);
         CommandContainer addAAPL = new CommandContainer("/add AAPL 4".split("\\s"),
                 callbackFlag, chatID, msgID);
 
-        assertFalse("Container should not have mistake", pricePie.hasError());
         assertFalse("Container should not have mistake", addAAPL.hasError());
         assertFalse("Container should not have mistake", addAMD.hasError());
 
-        RemoveAll.removeAll(pricePie, message);
+        RemoveAll.removeAll(addAAPL, message);
         Add.addAsset(addAAPL);
         Add.addAsset(addAMD);
+
+        CommandContainer pricePie = new CommandContainer("/pie".split("\\s"),
+                callbackFlag, chatID, msgID);
+        assertFalse("Container should not have mistake", pricePie.hasError());
+
+
 
         Double expectedAAPL = StockAPI.getStockPriceUSD("AAPL");
         assertNotNull("Result of stock API should not be null", expectedAAPL);
@@ -64,19 +67,26 @@ public class TestPie {
     @Test
     public void testNumPie(){
         JedisHandler.auth();
-        CommandContainer numPie = new CommandContainer("/npie".split("\\s"),
-                callbackFlag, chatID, msgID);
+
+
         CommandContainer addAMD = new CommandContainer("/add AMD 2".split("\\s"),
                 callbackFlag, chatID, msgID);
         CommandContainer addAAPL = new CommandContainer("/add AAPL 4".split("\\s"),
                 callbackFlag, chatID, msgID);
-        assertFalse("Container should not have mistake", numPie.hasError());
+
         assertFalse("Container should not have mistake", addAAPL.hasError());
         assertFalse("Container should not have mistake", addAMD.hasError());
 
-        RemoveAll.removeAll(numPie, message);
+        RemoveAll.removeAll(addAAPL, message);
         Add.addAsset(addAAPL);
         Add.addAsset(addAMD);
+
+        CommandContainer numPie = new CommandContainer("/npie".split("\\s"),
+                callbackFlag, chatID, msgID);
+        assertFalse("Container should not have mistake", numPie.hasError());
+
+
+
         Map<String, Integer> userData = JedisHandler.getUserData(numPie.getChatID());
         assertNotNull("User data should not be null", userData);
 

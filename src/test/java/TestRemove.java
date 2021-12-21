@@ -5,7 +5,6 @@ import commands.RemoveAll;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import utils.JedisHandler;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +13,6 @@ import static org.junit.Assert.*;
 @Slf4j
 public class TestRemove {
     private final SendMessage inputMessage = new SendMessage();
-    private final ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup();
     private final String chatID = "1337";
     private final String msgID = "7331";
     private final boolean callbackFlag = false;

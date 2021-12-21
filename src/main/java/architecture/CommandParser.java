@@ -1,7 +1,5 @@
 package architecture;
 
-import architecture.CommandContainer;
-import architecture.CommandExecutor;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -18,6 +16,7 @@ public class CommandParser {
         put("/help", args -> CommandExecutor.help());
         put("/pie", args -> CommandExecutor.pie(false));
         put("/npie", args -> CommandExecutor.pie(true));
+
 
         put("/removeAll", CommandExecutor::removeAll);
         put("/portfolioNews", CommandExecutor::getPortfolioNews);
@@ -36,10 +35,11 @@ public class CommandParser {
         boolean flagCB = false;
 
         if (update.hasCallbackQuery()) {
+
             CallbackQuery callbackQuery = update.getCallbackQuery();
             Message message = callbackQuery.getMessage();
-
             input = callbackQuery.getData().split("\\s");
+
             chat_id = message.getChatId().toString();
             msg_id = message.getMessageId().toString();
             flagCB = true;

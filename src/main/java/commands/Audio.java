@@ -22,9 +22,8 @@ public class Audio {
             bytes = SpeechAPI.textToSpeech(text);
         } catch (IOException e) {
             logger.error("Error happened during TTS conversion", e);
-        }
-
-        audio.setVoice(new InputFile(new ByteArrayInputStream(bytes.toByteArray()), "audio.mp3"));
+        } if (bytes != null)
+            audio.setVoice(new InputFile(new ByteArrayInputStream(bytes.toByteArray()), "audio.mp3"));
         return audio;
     }    
 }

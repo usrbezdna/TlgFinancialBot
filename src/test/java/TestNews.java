@@ -1,13 +1,13 @@
 import architecture.CommandContainer;
-import architecture.ReturningValues;
-import commands.*;
-import lombok.extern.slf4j.Slf4j;
+import commands.News;
+import commands.PortfolioNews;
+import commands.RemoveAll;
 import org.junit.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import utils.JedisHandler;
-import utils.StockAPI;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class TestNews {
     private final SendMessage inputMessage = new SendMessage();
     private final String chatID = "1337";

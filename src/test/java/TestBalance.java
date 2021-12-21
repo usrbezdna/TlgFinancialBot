@@ -9,7 +9,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import utils.JedisHandler;
 import utils.StockAPI;
+
 import static org.junit.Assert.*;
+
 
 @Slf4j
 public class TestBalance {
@@ -18,6 +20,7 @@ public class TestBalance {
     private final String chatID = "1337";
     private final String msgID = "7331";
     private final boolean callbackFlag = false;
+
 
     @Test
     public void testBalanceCorrect() {

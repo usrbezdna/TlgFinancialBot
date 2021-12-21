@@ -6,6 +6,7 @@ import architecture.ReturningValues;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import utils.Audio;
 import utils.KeyboardSetUp;
 import utils.StockAPI;
 import utils.StockNewsAPI;

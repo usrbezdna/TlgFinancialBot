@@ -3,7 +3,6 @@ import commands.Add;
 import commands.RemoveAll;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +32,7 @@ public class TestPie {
 
     private static Jedis testDataBase;
 
-    @Container
+    @Container //останавливает контейнер после каждого теста
     private static final GenericContainer<?> redisContainer = new GenericContainer<>("redis:3-alpine")
             .withExposedPorts(6379).withReuse(true);
 

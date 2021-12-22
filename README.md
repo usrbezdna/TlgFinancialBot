@@ -63,10 +63,16 @@
 
 ## <a href="https://github.com/tooBusyNow/tlgFinancialBot/releases/tag/v2.1-Snapshot"><p> <img alt="" src="https://lh3.googleusercontent.com/qoTqpS1I1RtmndGu27lR94tQxcn0zkFPxjBj9EGnyV-W2oYzGrcY2mnB6Ij8ZEuUgoZi61Lr22YJqQrUascM8omyXQ=w50-h50-e365"  target="_blank"/> **v2.1-Snapshot (3d5befa)**</p> </a>
 
-### 🟡 Task 3:
+### 🟢 Task 3:
 > <strong> Advanced callback options:
->> Detailed portfolio for "/balance" command <br>
+>> Detailed portfolio for Balance command <br>  
 >
->> News feature for your assets <br>
+>> News feature for your assets using StockAPI <br>
 >
->> Buttons with callbacks for interaction </strong> 
+>> Buttons with callbacks for interaction 
+>
+>> Integration testing for RedisDB using TestContainers
+> 
+>> SpeechAPI feature for news descriptions </strong>
+
+## <a href="https://github.com/tooBusyNow/tlgFinancialBot/releases/tag/v3.0-Snapshot"><p> <img alt="" src="https://lh3.googleusercontent.com/qoTqpS1I1RtmndGu27lR94tQxcn0zkFPxjBj9EGnyV-W2oYzGrcY2mnB6Ij8ZEuUgoZi61Lr22YJqQrUascM8omyXQ=w50-h50-e365"  target="_blank"/> **v3.0-Snapshot (End-of-life)**</p> </a>

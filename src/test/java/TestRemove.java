@@ -2,7 +2,6 @@ import architecture.CommandContainer;
 import commands.Add;
 import commands.Remove;
 import commands.RemoveAll;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,10 +36,8 @@ public class TestRemove {
     @BeforeClass
     public static void setUp() {
         redisContainer.start();
-
         String contHost = redisContainer.getHost();
         Integer contPort = redisContainer.getMappedPort(6379);
-
         testDataBase = new Jedis(contHost, contPort);
     }
 

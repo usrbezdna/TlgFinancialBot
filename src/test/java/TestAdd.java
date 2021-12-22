@@ -1,6 +1,5 @@
 import architecture.CommandContainer;
 import commands.Add;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,8 +44,8 @@ public class TestAdd{
 
         Map<String, Integer> before = JedisHandler.getUserData(chatID, testDataBase);
         SendMessage messageForUser = Add.addAsset(comCont);
-
         Map<String, Integer> after = JedisHandler.getUserData(chatID, testDataBase);
+
         assertEquals( "Message should contain correct text",
                 "Added ticker AAPL with amount: 2", messageForUser.getText());
 
